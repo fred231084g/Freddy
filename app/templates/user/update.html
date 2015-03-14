@@ -1,0 +1,33 @@
+
+  {% extends "/admin/layout.html" %}
+ {% block body %}
+        <div class="center row">
+            <div class="large-12 columns">
+               <fieldset>  
+                <form action="" method="POST"> 
+  
+				  <input type="text" value="{{ user.name }}"  name="name" required/>	    
+				  <input type="email" value="{{user.email}}" name="email" required/>
+				   <input type="password" value="{{user.password}}"  name="password"  required/>
+				   <button class="button "  type="submit">Add</button>
+                  </form>
+                </fieldset>  
+				      
+  
+                      			   
+				</div>
+			  </div>
+			  
+			 
+			 {% endblock %}
+			
+   
+  
+   
+
+
+  <
+   
+  
+   
+

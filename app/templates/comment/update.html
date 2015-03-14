@@ -1,0 +1,36 @@
+ {% extends "/admin/layout.html" %}
+   {% block body %}
+  
+        <div class="center row">
+            <div class="large-12 columns">
+               <fieldset>  
+                  <form action="" method="POST">
+                                      
+                  <input type="hidden" name="post_id" value="{{comment.post_id}}" required/>
+                  <label>Author<input type="text" name="author" value="{{comment.author}}" required/></label>              
+                  <label>Content<textarea type="text" name="content">{{comment.content}}</textarea></label>
+                  <div class="row"><div class="small-4 columns"><label>Website<input type="text" name="website" value="{{comment.website}}"></input></label></div>
+                    <div class="row">
+                       <div class="small-2 columns">
+                         <label>Approved
+                            <select name="approved">
+                            {% if comment.approved == 1 %}
+                                <option value="1"selected>Yes</option>
+                                <option value="0">No</option>  
+                             {% else %}
+                                 <option value="1">Yes</option>
+                                 <option value="0"selected>No</option>  
+                              {% endif %}                                 
+                           </select>
+                         </label>
+                        </div>
+                       </div>
+                      
+                  <button class="button "  type="submit">Save</button>
+                  </form>
+                </fieldset>  
+            </div>
+        </div>
+                
+            
+  {% endblock %}

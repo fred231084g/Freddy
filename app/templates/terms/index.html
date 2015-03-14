@@ -1,0 +1,32 @@
+
+{% extends "/admin/layout.html" %}  
+{% block body %}
+
+<div class="center row">
+      <div class="small-12 columns"><p><h4 style="display:inline">Categories </h4><a href="{{ url_for('term_add')}}">Add new</a></p></div>
+    </div>
+     
+      <!-- Main Page Content-->
+ <div class="center row">
+             <div class="small-12 columns">
+            <table> <thead><tr><th>Name</th><th>Description</th></tr></thead>
+             <tbody>
+             {% for term in terms %}
+              <tr><td>{{term.name}}</td><td>{{term.description}}</td>
+                  <td><a href="{{ url_for('term_update', id=term.id) }}">Edit</a>        <a href="{{ url_for('term_delete', id=term.id) }}">Delete</a></td>
+                </tr> 
+                {% endfor %} 
+              </tbody>
+            </table>
+          </div>
+        </div>
+     
+ {% endblock %}           
+     
+            
+                
+				
+     
+     
+      
+     

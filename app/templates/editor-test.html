@@ -1,0 +1,20 @@
+
+
+ {% extends "layout.html" %}
+
+ {% block body %}
+   <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
+ <script>
+   
+tinymce.init({selector: '#content', 
+        plugins: ["image"],
+        
+       });</script>
+ <form><textarea id="content"> Tetsing</textarea></form>
+   {% endblock %}
+   
+   
+   #Editor
+@app.route('/editor' )
+def editor:
+    return render_template('editor-test.html')

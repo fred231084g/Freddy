@@ -1,0 +1,31 @@
+ {% extends "/admin/layout.html" %}
+ {% block body %}
+      <div class="center row">
+      <div class="small-12 columns"><h4>Comments </h4></div>
+    </div>
+      <hr />
+        <div class="center row">
+            <div class="small-8 columns">
+               <fieldset>  
+                  <form action=""  method="POST">
+                 
+                 <input type="hidden" name="approved" value="1"/>
+                   <label>Name
+                   <input type="text" name="author"  required/>
+                  </label>                 
+                  <label>Website
+                   <input type="text" name="website"   />
+                  </label>
+                  <label>Content
+                   <input type="text" name="content"  required/>
+                  </label>
+                  <button class="button "  type="submit">Add</button>
+                 </form>
+                </fieldset>  
+            </div>
+        </div>
+                
+            
+        
+      
+  {% endblock %}

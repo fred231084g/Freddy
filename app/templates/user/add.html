@@ -1,0 +1,26 @@
+{% extends "/admin/layout.html" %}
+ {% block body %}
+        <div class="center row">
+            <div class="large-12 columns">
+               <fieldset>  
+                <form action="/user/add" method="POST"> 
+  
+				  <input type="text" placeholder="name" name="name" required/>	    
+				  <input type="email" placeholder="email" name="email" required/>
+				   <input type="password" placeholder="password"  name="password"  required/>
+				   <button class="button "  type="submit">Add</button>
+                  </form>
+                </fieldset>  
+				      
+  
+                      			   
+				</div>
+			  </div>
+			  
+			 
+			 {% endblock %}
+			
+   
+  
+   
+

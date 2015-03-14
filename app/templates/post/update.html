@@ -1,0 +1,48 @@
+ {% extends "/admin/layout.html" %}
+ 
+    {% block body %}
+    <!--Tiny MCE -->
+    <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
+     <script>tinymce.init({paste_data_images: true, paste_as_text: true,selector: '#content', plugins: ["image","code"] });</script>
+    <!--Tiny MCE end -->
+        <div class="center row">
+            <div class="large-12 columns">
+               <fieldset>  
+                  <form action="" method="POST">
+                                      
+                  <input type="hidden" name="author" value="1" required/>
+                  <label>Title<input type="text" name="title" value="{{post.title}}" required/></label>              
+                  <label>Body<textarea type="text" id="content" name="content" rows="20">{{post.content}}</textarea></label>
+                  <div class="row"><div class="small-4 columns">
+                   <label>Category
+                       <select name="category">
+                           {% for term in terms %}
+                            <option value={{term.id}} selected>{{term.name}}</option>
+                           {% endfor %}
+                           </select>
+                       </label>
+                     </div>
+                    <div class="row">
+                       <div class="small-2 columns">
+                         <label>Published
+                            <select name="published">
+                            {% if post.published == 1 %}
+                                <option value="1"selected>Yes</option>
+                                <option value="0">No</option>  
+                             {% else %}
+                                 <option value="1">Yes</option>
+                                 <option value="0"selected>No</option>  
+                              {% endif %}                                 
+                           </select>
+                         </label>
+                        </div>
+                       </div>
+                      
+                  <button class="button "  type="submit">Save</button>
+                  </form>
+                </fieldset>  
+            </div>
+        </div>
+                
+            
+  {% endblock %}
