@@ -142,6 +142,7 @@ def comment_delete (id):
           return error
 
 
+       
 #Users
 @app.route('/user/' )
 @login_required
@@ -157,11 +158,7 @@ def user_add():
         email=request.form['email']
         password=generate_password_hash(request.form['password'])
         user=Users(email,password,name)
-        user_add=user.add(user)
-        db_commit(user_add,user_index)
-       
-        return redirect(url_for('user_index'))
-                
+        return add(user, user_index, user_add)             
         
     return render_template('/user/add.html')
 	
@@ -289,6 +286,19 @@ def logout():
 
 
 #End Login Manager
+
+#CRUD FUNCTIONS
+#Arguments  are data to add, function to redirect to if the add was successful and if not
+def add (data, func1, func2):
+    add = data.add(data)
+    #if does not return any error
+    if not add :
+       flash("Add was successful") 
+       return redirect(url_for(str(func1.__name__))) 
+    else:
+       message=add
+       flash(message)
+       return redirect(url_for(str(func2.__name__))) 
     
 #Errors
 def db_commit(data,func):
