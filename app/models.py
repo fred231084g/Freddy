@@ -124,4 +124,4 @@ def  session_commit ():
         db.session.commit()        
       except SQLAlchemyError as message:
         db.session.rollback()
-        return message[0]
+        return message
