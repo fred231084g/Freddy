@@ -2,7 +2,6 @@ from app import db
 from flask.ext.login import LoginManager, login_user,UserMixin, logout_user
 from sqlalchemy.sql.expression import text
 from sqlalchemy.exc import SQLAlchemyError
-
       
 class Post(db.Model):
   id = db.Column(db.Integer, primary_key=True)
@@ -122,6 +121,6 @@ class Terms(db.Model):
 def  session_commit ():
       try:        
         db.session.commit()        
-      except SQLAlchemyError as message:
-        db.session.rollback()
-        return message
+      except SQLAlchemyError as e:
+         reason=str(e)
+         return reason

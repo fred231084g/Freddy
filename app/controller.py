@@ -1,4 +1,4 @@
-from flask import render_template, request,flash, redirect, url_for
+from flask import render_template, request,flash, redirect, url_for, abort
 from app import app, db
 from app.models import Post,Comment,Users, Terms
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -165,34 +165,29 @@ def user_add():
 @app.route('/user/update/<id>' , methods=['POST', 'GET'])
 @login_required
 def user_update (id):
-    #Getting user by primary key:
-    user = Users.query.get(id)
-    error=query_error(user, user_index)
-    if not error:
-        if request.method == 'POST':
+    #Get user by primary key:
+    user=Users.query.get(id)
+    if user == None:
+       return abort(404)
+    if request.method == 'POST':
             user.email=request.form['email']
             user.password = request.form['password']
             user.name =  request.form['name']
-            user_update=user.update()
-            db_commit(user_update, user_index)
+            return update(user, user_index, user_update, id)
             
-        return render_template('user/update.html', user=user)
-    else:
-          return error
+    return render_template('/user/update.html', user=user)
+    
 	
 
 @app.route('/user/delete/<id>' , methods=['POST', 'GET'])
 @login_required
 def user_delete (id):
      user = Users.query.get(id)
-     error = query_error(user,user_index)
-     if not error:            
-            user_delete=user.delete(user)
-            #if does not return an error
-            db_commit(user_delete, user_index)
-            return redirect(url_for('user_index'))
-     else:
-          return error
+     if user == None:
+       return abort(404)
+     return delete(user, user_index)
+          
+            
           
           
 #START TERMS
@@ -299,6 +294,33 @@ def add (data, func1, func2):
        message=add
        flash(message)
        return redirect(url_for(str(func2.__name__))) 
+       
+       
+def update (data, func1, func2, id):    
+         
+            update=data.update()
+            #if does not return any error
+            if not update :
+              flash("Update was successful") 
+              return redirect(url_for(str(func1.__name__))) 
+            else:
+               message=update
+               flash(message)
+               return redirect(url_for(str(func2.__name__), id=id)) 
+            
+          
+   
+def delete (data, func1):
+     delete=data.delete(data)
+     if not delete :
+              flash("Delete was successful") 
+              
+     else:
+          message=delete
+          flash(message)
+     return redirect(url_for(str(func1.__name__))) 
+       
+
     
 #Errors
 def db_commit(data,func):
