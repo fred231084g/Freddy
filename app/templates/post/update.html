@@ -1,10 +1,10 @@
  {% extends "/admin/layout.html" %}
  
     {% block body %}
-    <!--Tiny MCE -->
-    <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
-     <script>tinymce.init({paste_data_images: true, paste_as_text: true,selector: '#content', plugins: ["image","code"] });</script>
-    <!--Tiny MCE end -->
+   <!--CKeditor -->
+    <script src="//cdn.ckeditor.com/4.4.7/standard/ckeditor.js"></script>
+  <!--CKeditor end -->
+  
         <div class="center row">
             <div class="large-12 columns">
                <fieldset>  
@@ -44,5 +44,11 @@
             </div>
         </div>
                 
+    <!-- CKeditor config http://docs.ckeditor.com/#!/guide/dev_configuration -->
+      <script>
+            CKEDITOR.replace( 'content', {
+              height: 500
+              });            
             
+        </script>            
   {% endblock %}
