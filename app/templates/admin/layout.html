@@ -6,9 +6,9 @@
     <title>Flask Blog</title>
     <link rel="stylesheet" href="/static/css/foundation.css" />
     <script src="/static/js/vendor/modernizr.js"></script>
-  
+
   </head>
-  
+
   {% with messages = get_flashed_messages() %}
   {% if messages %}
     <ul class=flashes>
@@ -22,39 +22,39 @@
    <body>
    <div class="row">
        <aside class="large-3 columns">
-         
+
               <hr/>
-         
-            
+
+
                 <a data-options="align:right" data-dropdown="drop" aria-controls="drop1" aria-expanded="false">Posts</a>
                   <ul id="drop" class="tiny f-dropdown" data-dropdown-content>
                       <li><a href="/post/">All Posts</a></li>
-                      
+
                       <li><a href="/post/add">Add new</a></li>
                    </ul>
                    <br>
                   <a data-options="align:right "data-dropdown="drop1">Comments</a>
                   <ul id="drop1" class="tiny f-dropdown" data-dropdown-content>
                       <li><a href="/comment">All Comments</a></li>
-                   
-                  
-                   </ul> 
-                      <br>                   
+
+
+                   </ul>
+                      <br>
                    <a data-options="align:right" data-dropdown="drop2">Users</a>
                   <ul id="drop2" class="tiny f-dropdown" data-dropdown-content>
                       <li><a href="/user">All Users</a></li>
                       <li><a href="/user/add">Add new</a></li>
-                      
+
                    </ul>
                    <br>
-                   <a data-options="align:right" data-dropdown="drop2">Categories</a>
-                  <ul id="drop2" class="tiny f-dropdown" data-dropdown-content>
+                   <a data-options="align:right" data-dropdown="drop3">Categories</a>
+                  <ul id="drop3" class="tiny f-dropdown" data-dropdown-content>
                       <li><a href="/terms">All Categories</a></li>
                       <li><a href="/terms/add">Add new</a></li>
-                      
+
                    </ul>
-             
-         
+
+
             </aside>
        <div class="large-9 columns" >
        <div class="row">
@@ -69,6 +69,6 @@
     <script>
       $(document).foundation();
     </script>
-  
+
      </body>
 	</html>

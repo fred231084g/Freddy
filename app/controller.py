@@ -57,25 +57,23 @@ def post_update (id):
 
     return render_template('post/update.html', post=post, terms=terms)
 
-@app.route('/delete/<id>' , methods=['POST', 'GET'])
+@app.route('/post/delete/<id>' , methods=['POST', 'GET'])
 @login_required
 def post_delete (id):
      post = Post.query.get(id)
-     if user == None:
+     if post == None:
        return abort(404)
      return delete(post, post_index)
 
-
-
-
- #Comments
+#Comments
 @app.route('/comment/' )
 @login_required
 def comment_index():
   comments = Comment.query.all()
   return render_template('/comment/index.html', comments=comments)
 
-@app.route('/comment/add/<post_id>', methods=['POST', 'GET'])
+
+@app.route('/comment/add/<post_id>', methods=['POST'])
 @login_required
 def comment_add(post_id):
     post = Post.query.get(post_id)
@@ -95,38 +93,26 @@ def comment_add(post_id):
 @login_required
 def comment_update (id):
     comment = Comment.query.get(id)
-    error = query_error(comment,comment_index)
-    if not error:
-        if request.method == 'POST':
+    if comment == None:
+       return abort(404)
+    if request.method == 'POST':
             comment.author=request.form['author']
             comment.website=request.form['website']
             comment.content=request.form['content']
             comment.approved=request.form['approved']
-            comment_update=comment.update()
-            if comment_update == 'false':
-               flash("Oops something went wrong")
-            else:
-               flash("Update was successful")
-               return redirect(url_for('comment_index'))
-        return render_template('comment/update.html', comment=comment)
-    else:
-        return error
+            return update(comment, comment_index, comment_update, id)
+
+
+    return render_template('comment/update.html', comment=comment)
 
 
 @app.route('/comment/delete/<id>', methods=['POST', 'GET'])
 @login_required
 def comment_delete (id):
     comment = Comment.query.get(id)
-    error = query_error(comment,comment_index)
-    if not error:
-
-            comment.delete(comment)
-            flash("Comment was deleted successfully")
-            return redirect(url_for('comment_index'))
-    else:
-          return error
-
-
+    if comment == None:
+      return abort(404)
+    return delete(comment, comment_index)
 
 #Users
 @app.route('/user/' )
@@ -189,11 +175,7 @@ def term_add():
         name=request.form['name']
         description=request.form['description']
         term=Terms(name,description)
-        term_add=term.add(term)
-        db_commit(term_add,term_index)
-
-        return redirect(url_for('term_index'))
-
+        return add(term, term_index, term_add)
 
      return render_template('/terms/add.html')
 
@@ -202,33 +184,27 @@ def term_add():
 def term_update (id):
     #Getting user by primary key:
     term = Terms.query.get(id)
-    error=query_error(term, term_index)
-    if not error:
-        if request.method == 'POST':
+    if term == None:
+       return abort(404)
+    if request.method == 'POST':
             term.name=request.form['name']
             term.description = request.form['description']
-            term_update=term.update()
-            db_commit(term_update, term_index)
+            return update(term, term_index, term_update, id)
 
-        return render_template('terms/update.html', term=term)
-    else:
-          return error
+    return render_template('terms/update.html', term=term)
 
-
-
+    post = Post.query.get(id)
+    if post == None:
+      return abort(404)
+    return delete(post, post_index)
 
 @app.route('/terms/delete/<id>' , methods=['POST', 'GET'])
 @login_required
 def term_delete (id):
      term = Terms.query.get(id)
-     error = query_error(term,term_index)
-     if not error:
-            term_delete=term.delete(term)
-            #if does not return an error
-            db_commit(term_delete, term_index)
-            return redirect(url_for('term_index'))
-     else:
-          return error
+     if term == None:
+        return abort(404)
+     return delete(term, term_index)
 
 
 #END TERMS
@@ -244,18 +220,16 @@ def load_user(id):
 @app.route('/login', methods=['POST', 'GET'])
 def login ():
   if request.method == 'POST':
-    email=request.form['email']
-    password=request.form['password']
-    user=Users.query.filter_by(email=email).first()
-    error=query_error(user,login)
-    if not error:
+        email=request.form['email']
+        password=request.form['password']
+        user=Users.query.filter_by(email=email).first()
+        if user == None:
+           return abort(404)
         if check_password_hash(user.password,password):
-          login_user(user)
-          return redirect(url_for('post_index'))
+              login_user(user)
+              return redirect(url_for('post_index'))
         else:
-         flash("invalid username/password")
-    else:
-        return error
+             flash("invalid username/password")
   return render_template('login.html')
 
 @app.route('/logout')
@@ -304,20 +278,3 @@ def delete (data, func1):
           message=delete
           flash(message)
      return redirect(url_for(str(func1.__name__)))
-
-
-
-#Errors
-def db_commit(data,func):
-    #if does not return an error
-    if not data:
-       flash("Great Success")
-       return redirect(url_for(str(func.__name__)))
-    else:
-       message=data
-       flash(message)
-
-def query_error(var,func):
-  if var == None:
-      flash("This entry does not exist in the database")
-      return redirect(url_for(str(func.__name__)))
