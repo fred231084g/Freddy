@@ -1,0 +1,107 @@
+{% extends 'layout.html' %}
+    {% block body %}
+
+    <div class="row">
+      <div class="large-12 columns">
+
+        <h2 style="font-family:courier">Supportinc.net</h2>
+        <hr/>
+      </div>
+    </div >
+
+
+
+    <div class="row">
+
+      <div class="large-9 columns" role="content">
+
+        <article>
+
+          <h3><a href="#">{{ post.title }}</a></h3>
+
+            {{ post.content|safe }}
+
+        </article>
+
+        <!--COMENTS START -->
+
+     <button class="button tiny " onclick="$('#comments').toggle();">Comments</button>
+
+     <div class="row" id="comments" style='display:none'>
+     <div class="small-8 columns" role="content">
+
+       <!--ADD COMENTS -->
+
+       <fieldset>
+                <form action="{{url_for('comment_add', post_id=post.id)}}"  method="POST">
+               <input type="hidden" name="approved" value="1"/>
+               <div class="row">
+                 <div class="small-6 columns">
+                    <input type="text" name="author" placeholder="Name" required/>
+                  </div>
+                  <div class="small-6 columns">
+
+                   <input type="text" name="website"  placeholder="Website"/>
+                    </div>
+                    </div>
+
+
+                 <textarea name="content" placeholder="Comment"  required/></textarea>
+
+                <button class="button tiny "  type="submit">Add</button>
+               </form>
+              </fieldset>
+
+           <!--END ADD COMENTS -->
+
+       {%for comment in post.comments.all()%}
+         <fieldset>
+         <span class="radius secondary label"> {{comment.author}}</span> </br>
+          <p>{{comment.content}}</p>
+          </fieldset>
+
+        {%endfor%}
+
+
+       </div>
+      </div>
+       <!--COMENTS END -->
+<hr/>
+
+
+      </div>
+
+
+
+
+      <aside class="large-3 columns">
+
+        <h5>Search</h5>
+        <input type="text" name="search">
+
+        <div class="panel">
+          <h5>Featured</h5>
+          <p>Backup your website at Just 5$ with Supportinc.net</p>
+        </div>
+
+        <h5>Recent Posts</h5>
+        <ul>
+         <li> How to install Selenium on Linux and automate your web tests</li>
+         <li> Post number 2</li>
+        </ul>
+
+         <div class="panel">
+          <h5>Featured</h5>
+          <p>Backup your website at Just 5$ with Supportinc.net</p>
+        </div>
+
+        <h5> Latest Tweets </h5>
+
+
+      </aside>
+
+
+    </div>
+
+
+    {% endblock %}

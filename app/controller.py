@@ -5,14 +5,23 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask.ext.login import LoginManager, login_user,UserMixin, logout_user, login_required
 
 
-#Main
+##Main Content Begins##
+#Main index page
 @app.route('/' )
 def index():
   post = Post.query.all()
   return render_template('index.html', post=post)
 
+#Single Post
+@app.route('/post/<id>' )
+def single_post(id):
+  post = Post.query.get(id)
+  if post == None:
+     return abort(404)
+  return render_template('single.html', post=post)
 
-#End Main Content
+##End Main Content##
+
 #Posts
 @app.route('/post/' )
 @login_required
@@ -27,53 +36,34 @@ def post_add():
     terms=Terms.query.all()
     if request.method == 'POST':
         post=Post(request.form['author'],request.form['title'],request.form['content'], request.form['published'],request.form['category'])
-        post_add=post.add(post)
-        if not post_add:
-                   flash("Add was successful")
-                   return redirect(url_for('post_index'))
-        else:
-                   flash("Oops something went wrong")
+        return add(post, post_index, post_add)
 
     return render_template('/post/add.html', terms=terms)
 
 @app.route('/post/update/<id>' , methods=['POST', 'GET'])
 @login_required
 def post_update (id):
-    #Getting user by primary key:
     post = Post.query.get(id)
-    error=query_error(post, post_index)
-    if not error:
-        terms=Terms.query.all()
-        if request.method == 'POST':
+    if post == None:
+       return abort(404)
+    terms=Terms.query.all()
+    if request.method == 'POST':
             post.author=request.form['author']
             post.title = request.form['title']
             post.content =  request.form['content']
             post.published=request.form['published']
             post.category=request.form['category']
-            post_update=post.update()
-            if not post_update:
-                   flash("Update was successful")
-                   return redirect(url_for('post_index'))
+            return update(post, post_index, post_update, id)
 
-            else:
-                   flash("Oops something went wrong")
-
-        return render_template('post/update.html', post=post, terms=terms)
-    else:
-          return error
-
+    return render_template('post/update.html', post=post, terms=terms)
 
 @app.route('/delete/<id>' , methods=['POST', 'GET'])
 @login_required
 def post_delete (id):
      post = Post.query.get(id)
-     error = query_error(post, post_index)
-     if not error:
-            post.delete(post)
-            flash("Post was deleted successfully")
-            return redirect(url_for('post_index'))
-     else:
-          return error
+     if user == None:
+       return abort(404)
+     return delete(post, post_index)
 
 
 
@@ -89,22 +79,17 @@ def comment_index():
 @login_required
 def comment_add(post_id):
     post = Post.query.get(post_id)
-    error = query_error(post,comment_index)
-    if not error:
-        if request.method == 'POST':
+    if post == None:
+       return abort(404)
+    if request.method == 'POST':
            comment=Comment(request.form['author'], request.form['website'], request.form['content'],post_id,request.form['approved'])
            comment_add=comment.add(comment)
            if not comment_add:
                flash("Add was successful")
-               return redirect(url_for('comment_index'))
-
            else:
                flash("Oops something went wrong")
+           return redirect(url_for('single_post', id=post_id))
 
-
-        return render_template('comment/add.html', post_id=post_id)
-    else:
-        return error
 
 @app.route('/comment/update/<id>', methods=['POST', 'GET'])
 @login_required
