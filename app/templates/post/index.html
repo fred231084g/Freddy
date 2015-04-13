@@ -1,48 +1,47 @@
 
  {% extends "/admin/layout.html" %}
- {% block body %} 
+ {% block body %}
       <!-- Main Page Content and Sidebar -->
-   
+
    <div class="center row">
       <div class="small-8 columns"><p><h4 style="display:inline">Posts  </h4><a href="{{ url_for('post_add')}}">Add new</a></p></div>
-       
+
     </div>
       <hr />
-      
-           
+
+
            <div class="center row">
              <div class="small-12 columns">
              <table>
-              <thead><tr><th>Title</th><th>Author</th><th>Category</th><th>Published</th><th>Actions</th></tr></thead>
+              <thead><tr><th>Title</th><th>Comment Count</th><th>Category</th><th>Published</th><th>Actions</th></tr></thead>
               <tbody>
                 <tr>
                 {% for post in post %}
-                  <td>{{ post.title }}</td>
-                  <td>{{ post.author }}</td>
+
+                  <td><a href="{{ url_for('single_post', id=post.id) }}">{{ post.title }}</a></td>
+                  <td>{{ post.comments.count() }}</td>
                   {% for term in terms %}
                      {%  if term.id==post.category %}
                      <td>{{ term.name }}</td>
                       {%  endif %}
                     {% endfor %}
-                  
+
                   <td>{{ post.published }}</td>
-                  <td><a href="{{ url_for('post_update', id=post.id) }}">Edit</a></td>
-                  <td><a href="{{ url_for('post_delete', id=post.id) }}">Delete</a></td>
+                  <td><a href="{{ url_for('post_update', id=post.id) }}">Edit</a>
+                  <a href="{{ url_for('post_delete', id=post.id) }}">Delete</a></td>
                  </tr>
-                {% endfor %}                  
+                {% endfor %}
                </tbody>
              </table>
-             
-             </div>          
-             
+
+             </div>
+
             </div>
-                                  
-               
-    
-     
-     
+
+
+
+
+
         <!-- End Main Content -->
-        
+
    {% endblock %}
-     
-       
