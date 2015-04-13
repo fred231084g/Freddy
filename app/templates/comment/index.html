@@ -1,44 +1,42 @@
 
  {% extends "/admin/layout.html" %}
- {% block body %} 
+ {% block body %}
       <!-- Main Page Content and Sidebar -->
-   
+
    <div class="center row">
-      <div class="small-12 columns"><p><h4 style="display:inline">Comments </h4><a href="{{ url_for('comment_add', post_id=2)}}">Add new</a></p></div>
+      <div class="small-12 columns"><p><h4 style="display:inline">Comments </h4></p></div>
     </div>
       <hr />
-      
-           
+
+
            <div class="center row">
              <div class="small-12 columns">
              <table>
               <thead><th>Author</th><th>Website</th><th>Content</th><th>Approved</th><th>Date</th><th>Post</th></tr></thead>
               <tbody>
                 <tr>
-                {% for comment in comments %}                  
+                {% for comment in comments %}
                   <td>{{ comment.author }}</td>
                   <td>{{ comment.website }}</td>
-                  <td>{{ comment.content }}</td>                  
+                  <td>{{ comment.content }}</td>
                   <td>{{ comment.approved }}</td>
                   <td>{{comment.created_on}}</td>
-                  <td>{{comment.post_id}}</td>
+                  <td>{{comment.post.title}}</td>
                   <td><a href="{{ url_for('comment_update', id=comment.id) }}">Edit</a></td>
                   <td><a href="{{ url_for('comment_delete', id=comment.id) }}">Delete</a></td>
                  </tr>
-                {% endfor %}                  
+                {% endfor %}
                </tbody>
              </table>
-             
-             </div>          
-             
+
+             </div>
+
             </div>
-                                  
-               
-    
-     
-     
+
+
+
+
+
         <!-- End Main Content -->
-        
+
    {% endblock %}
-     
-       
