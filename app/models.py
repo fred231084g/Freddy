@@ -12,7 +12,7 @@ class Post(db.Model):
   published = db.Column(db.Boolean, default=1, nullable=False)
   #add ondelete manually in alembic
   category = db.Column(db.Integer, db.ForeignKey('terms.id', ondelete="CASCADE"))
-  comments = db.relationship('Comment', backref='post', lazy='dynamic')
+  comments = db.relationship('Comment', backref="post", cascade="all, delete-orphan" , lazy='dynamic')
 
   def __init__(self, author,title, content,published,category):
         self.title = title
@@ -42,7 +42,7 @@ class Comment(db.Model):
   website = db.Column(db.String(255))
   content = db.Column(db.Text, nullable=False)
   approved = db.Column(db.Boolean, default=1)
-  post_id = db.Column(db.Integer, db.ForeignKey('post.id', ondelete="CASCADE"))
+  post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
 
   def __init__(self, author,website, content,post_id,approved):
         self.author = author
