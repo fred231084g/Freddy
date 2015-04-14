@@ -224,7 +224,8 @@ def login ():
         password=request.form['password']
         user=Users.query.filter_by(email=email).first()
         if user == None:
-           return abort(404)
+           flash("invalid username/password")
+           return render_template('login.html')
         if check_password_hash(user.password,password):
               login_user(user)
               return redirect(url_for('post_index'))
