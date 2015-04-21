@@ -21,7 +21,8 @@
 
 
 
-              {{ post.content|safe }}
+            {{ post.content|truncate()|safe }}
+            <p><a href="{{url_for('single_post', id=post.id)}}">Read More</a></p>
 
 
           </article>
