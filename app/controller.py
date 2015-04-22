@@ -3,6 +3,8 @@ from app import app, db
 from app.models import Post,Comment,Users, Terms
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask.ext.login import LoginManager, login_user,UserMixin, logout_user, login_required
+from slugify import slugify
+
 
 
 ##Main Content Begins##
@@ -13,14 +15,16 @@ def index():
   return render_template('index.html', post=post)
 
 #Single Post
-@app.route('/post/<id>' )
-def single_post(id):
+@app.route('/post/<id>/<slug>' )
+def single_post(id,slug):
+  #post = Post.query.filter_by(slug=slug).first()
   post = Post.query.get(id)
   if post == None:
      return abort(404)
   return render_template('single.html', post=post)
 
 ##End Main Content##
+
 
 #Posts
 @app.route('/post/' )
@@ -35,7 +39,8 @@ def post_index():
 def post_add():
     terms=Terms.query.all()
     if request.method == 'POST':
-        post=Post(request.form['author'],request.form['title'],request.form['content'], request.form['published'],request.form['category'])
+        slug=slugify(request.form['url'])
+        post=Post(request.form['author'],request.form['title'], slug,request.form['content'], request.form['published'],request.form['category'])
         return add(post, post_index, post_add)
 
     return render_template('/post/add.html', terms=terms)
@@ -50,6 +55,7 @@ def post_update (id):
     if request.method == 'POST':
             post.author=request.form['author']
             post.title = request.form['title']
+            post.slug = slugify(request.form['url'])
             post.content =  request.form['content']
             post.published=request.form['published']
             post.category=request.form['category']
@@ -86,7 +92,7 @@ def comment_add(post_id):
                flash("Add was successful")
            else:
                flash("Oops something went wrong")
-           return redirect(url_for('single_post', id=post_id))
+           return redirect(url_for('single_post', id=post.id, slug=post.slug))
 
 
 @app.route('/comment/update/<id>', methods=['POST', 'GET'])

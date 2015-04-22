@@ -7,6 +7,7 @@ class Post(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   author = db.Column(db.String(255))
   title = db.Column(db.String(255),nullable=False)
+  slug = db.Column(db.String(255))
   created_on=db.Column(db.TIMESTAMP,server_default=db.func.current_timestamp())
   content = db.Column(db.Text)
   published = db.Column(db.Boolean, default=1, nullable=False)
@@ -14,9 +15,10 @@ class Post(db.Model):
   category = db.Column(db.Integer, db.ForeignKey('terms.id', ondelete="CASCADE"))
   comments = db.relationship('Comment', backref="post", cascade="all, delete-orphan" , lazy='dynamic')
 
-  def __init__(self, author,title, content,published,category):
-        self.title = title
+  def __init__(self, author,title,slug, content,published,category):
         self.author = author
+        self.title = title
+        self.slug = slug
         self.content=content
         self.published=published
         self.category=category

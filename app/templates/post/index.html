@@ -18,7 +18,7 @@
                 <tr>
                 {% for post in post %}
 
-                  <td><a href="{{ url_for('single_post', id=post.id) }}">{{ post.title }}</a></td>
+                  <td><a href="{{ url_for('single_post', id=post.id, slug=post.slug) }}">{{ post.title }}</a></td>
                   <td>{{ post.comments.count() }}</td>
                   {% for term in terms %}
                      {%  if term.id==post.category %}
