@@ -1,18 +1,19 @@
  {% extends "/admin/layout.html" %}
- 
+
     {% block body %}
    <!--CKeditor -->
     <script src="//cdn.ckeditor.com/4.4.7/standard/ckeditor.js"></script>
   <!--CKeditor end -->
-  
+
         <div class="center row">
             <div class="large-12 columns">
-               <fieldset>  
+               <fieldset>
                   <form action="" method="POST">
-                                      
+
                   <input type="hidden" name="author" value="1" required/>
-                  <label>Title<input type="text" name="title" value="{{post.title}}" required/></label>              
+                  <label>Title<input type="text" name="title" value="{{post.title}}" required/></label>
                   <label>Body<textarea type="text" id="content" name="content" rows="20">{{post.content}}</textarea></label>
+                  <label>URL<input type="text" name="url" value="{{post.slug}}" required/></label>
                   <div class="row"><div class="small-4 columns">
                    <label>Category
                        <select name="category">
@@ -28,27 +29,27 @@
                             <select name="published">
                             {% if post.published == 1 %}
                                 <option value="1"selected>Yes</option>
-                                <option value="0">No</option>  
+                                <option value="0">No</option>
                              {% else %}
                                  <option value="1">Yes</option>
-                                 <option value="0"selected>No</option>  
-                              {% endif %}                                 
+                                 <option value="0"selected>No</option>
+                              {% endif %}
                            </select>
                          </label>
                         </div>
                        </div>
-                      
+
                   <button class="button "  type="submit">Save</button>
                   </form>
-                </fieldset>  
+                </fieldset>
             </div>
         </div>
-                
+
     <!-- CKeditor config http://docs.ckeditor.com/#!/guide/dev_configuration -->
       <script>
             CKEDITOR.replace( 'content', {
               height: 500
-              });            
-            
-        </script>            
+              });
+
+        </script>
   {% endblock %}

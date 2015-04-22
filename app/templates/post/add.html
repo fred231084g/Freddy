@@ -3,14 +3,15 @@
       <!--CKeditor -->
     <script src="//cdn.ckeditor.com/4.4.7/standard/ckeditor.js"></script>
   <!--CKeditor end -->
-  
+
         <div class="center row">
             <div class="large-12 columns">
-               <fieldset>  
-                  <form action="/post/add" method="POST">             
+               <fieldset>
+                  <form action="/post/add" method="POST">
                   <input type="hidden" name="author" value="1" required/>
-                  <label>Title<input type="text" name="title" required/></label>              
+                  <label>Title<input type="text" name="title" required/></label>
                   <label>Body<textarea type="text" id="content" name="content" rows="20" ></textarea></label>
+                  <label>URL<input type="text" name="url" required/></label>
                   <div class="row">
                     <div class="small-4 columns">
                     <label>Category
@@ -19,22 +20,22 @@
                             <option value={{term.id}} selected>{{term.name}}</option>
                            {% endfor %}
                            </select>
-                  
+
                   </label></div>
                     <div class="row">
                        <div class="small-2 columns">
                          <label>Published
                            <select name="published">
                             <option value="1"selected>Yes</option>
-                            <option value="0">No</option> 
+                            <option value="0">No</option>
                            </select>
                          </label>
                         </div>
                        </div>
-                      
+
                   <button class="button "  type="submit">Save</button>
                   </form>
-                </fieldset>  
+                </fieldset>
             </div>
         </div>
 
@@ -42,9 +43,9 @@
       <script>
             CKEDITOR.replace( 'content', {
               height: 500
-              });            
-            
-        </script>            
-        
-      
+              });
+
+        </script>
+
+
   {% endblock %}
