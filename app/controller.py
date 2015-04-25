@@ -18,9 +18,7 @@ def index():
 @app.route('/post/<id>/<slug>' )
 def single_post(id,slug):
   #post = Post.query.filter_by(slug=slug).first()
-  post = Post.query.get(id)
-  if post == None:
-     return abort(404)
+  post = Post.query.get_or_404(id)
   return render_template('single.html', post=post)
 
 ##End Main Content##
@@ -48,9 +46,7 @@ def post_add():
 @app.route('/post/update/<id>' , methods=['POST', 'GET'])
 @login_required
 def post_update (id):
-    post = Post.query.get(id)
-    if post == None:
-       return abort(404)
+    post = Post.query.get_or_404(id)
     terms=Terms.query.all()
     if request.method == 'POST':
             post.author=request.form['author']
@@ -66,9 +62,7 @@ def post_update (id):
 @app.route('/post/delete/<id>' , methods=['POST', 'GET'])
 @login_required
 def post_delete (id):
-     post = Post.query.get(id)
-     if post == None:
-       return abort(404)
+     post = Post.query.get_or_404(id)
      return delete(post, post_index)
 
 #Comments
@@ -83,8 +77,6 @@ def comment_index():
 @login_required
 def comment_add(post_id):
     post = Post.query.get(post_id)
-    if post == None:
-       return abort(404)
     if request.method == 'POST':
            comment=Comment(request.form['author'], request.form['website'], request.form['content'],post_id,request.form['approved'])
            comment_add=comment.add(comment)
@@ -98,9 +90,7 @@ def comment_add(post_id):
 @app.route('/comment/update/<id>', methods=['POST', 'GET'])
 @login_required
 def comment_update (id):
-    comment = Comment.query.get(id)
-    if comment == None:
-       return abort(404)
+    comment = Comment.query.get_or_404(id)
     if request.method == 'POST':
             comment.author=request.form['author']
             comment.website=request.form['website']
@@ -115,9 +105,7 @@ def comment_update (id):
 @app.route('/comment/delete/<id>', methods=['POST', 'GET'])
 @login_required
 def comment_delete (id):
-    comment = Comment.query.get(id)
-    if comment == None:
-      return abort(404)
+    comment = Comment.query.get_or_404(id)
     return delete(comment, comment_index)
 
 #Users
@@ -143,9 +131,7 @@ def user_add():
 @login_required
 def user_update (id):
     #Get user by primary key:
-    user=Users.query.get(id)
-    if user == None:
-       return abort(404)
+    user=Users.query.get_or_404(id)
     if request.method == 'POST':
             user.email=request.form['email']
             user.password = request.form['password']
@@ -159,11 +145,8 @@ def user_update (id):
 @app.route('/user/delete/<id>' , methods=['POST', 'GET'])
 @login_required
 def user_delete (id):
-     user = Users.query.get(id)
-     if user == None:
-       return abort(404)
+     user = Users.query.get_or_404(id)
      return delete(user, user_index)
-
 
 
 
@@ -189,9 +172,7 @@ def term_add():
 @login_required
 def term_update (id):
     #Getting user by primary key:
-    term = Terms.query.get(id)
-    if term == None:
-       return abort(404)
+    term = Terms.query.get_or_404(id)
     if request.method == 'POST':
             term.name=request.form['name']
             term.description = request.form['description']
@@ -199,17 +180,11 @@ def term_update (id):
 
     return render_template('terms/update.html', term=term)
 
-    post = Post.query.get(id)
-    if post == None:
-      return abort(404)
-    return delete(post, post_index)
 
 @app.route('/terms/delete/<id>' , methods=['POST', 'GET'])
 @login_required
 def term_delete (id):
-     term = Terms.query.get(id)
-     if term == None:
-        return abort(404)
+     term = Terms.query.get_or_404(id)
      return delete(term, term_index)
 
 
