@@ -161,9 +161,8 @@ def term_index():
 @login_required
 def term_add():
      if request.method == 'POST':
-        name=request.form['name']
-        description=request.form['description']
-        term=Terms(name,description)
+        term=Terms(request.form['name'],request.form['slug'],request.form['description'], request.form['taxonomy']
+                      ,request.form['parent'])
         return add(term, term_index, term_add)
 
      return render_template('/terms/add.html')
@@ -174,8 +173,11 @@ def term_update (id):
     #Getting user by primary key:
     term = Terms.query.get_or_404(id)
     if request.method == 'POST':
-            term.name=request.form['name']
+            term.name = request.form['name']
+            term.slug = request.form['slug']
             term.description = request.form['description']
+            term.taxonomy = request.form['taxonomy']
+            term.parent = request.form['parent']
             return update(term, term_index, term_update, id)
 
     return render_template('terms/update.html', term=term)

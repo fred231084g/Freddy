@@ -4,30 +4,36 @@
     <script src="//cdn.ckeditor.com/4.4.7/standard/ckeditor.js"></script>
   <!--CKeditor end -->
 
+
         <div class="center row">
             <div class="large-12 columns">
                <fieldset>
                   <form action="/post/add" method="POST">
-                  <input type="hidden" name="author" value="1" required/>
                   <label>Title<input type="text" name="title" required/></label>
+                  <label>URL<input type="text" name="slug" required/></label>
                   <label>Body<textarea type="text" id="content" name="content" rows="20" ></textarea></label>
-                  <label>URL<input type="text" name="url" required/></label>
+
+                  <label>Type<input type="text" name="post_type" value="post" required/></label>
+                  <label>Author<input type="text" name="author" value="{{current_user.name}}" disabled/></label>
                   <div class="row">
                     <div class="small-4 columns">
                     <label>Category
                        <select name="category">
                            {% for term in terms %}
+                              {%if term.taxonomy == "category"%}
                             <option value={{term.id}} selected>{{term.name}}</option>
+                               {%endif%}
                            {% endfor %}
                            </select>
+                  <label>Tag<input type="text" name="tag" /></label>
 
                   </label></div>
                     <div class="row">
                        <div class="small-2 columns">
                          <label>Published
-                           <select name="published">
-                            <option value="1"selected>Yes</option>
-                            <option value="0">No</option>
+                           <select name="status">
+                            <option value="publish"selected>Publish</option>
+                            <option value="draft">Draft</option>
                            </select>
                          </label>
                         </div>
@@ -43,9 +49,10 @@
       <script>
             CKEDITOR.replace( 'content', {
               height: 500
-              });
+            });
 
         </script>
+
 
 
   {% endblock %}
