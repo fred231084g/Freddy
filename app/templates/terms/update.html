@@ -3,30 +3,49 @@
  {% block body %}
         <div class="center row">
             <div class="large-12 columns">
-               <fieldset>  
-                <form action="" method="POST"> 
-  
-				  <input type="text" value="{{ term.name }}"  name="name" required/>	    
-				  <input type="text" value="{{term.description}}" name="description"/>
+               <fieldset>
+                <form action="" method="POST">
+
+                  <label>Term Name<input type="text" name="name" value="{{ term.name }}" required/></label>
+                  <label>Slug<input type="text" name="slug" value="{{term.slug}}" required/></label>
+                  <label>Description<input type="text" name="description" value="{{term.description}}" /></label>
+                  <div class="row">
+                     <div class="small-4 columns">
+                       <label>Taxonomy
+                         {% if term.taxonomy == "tag" %}
+                         <select name="taxonomy">
+                          <option value="tag"selected>Tag</option>
+                          <option value="category">Category</option>
+                         </select>
+                         {% elif term.taxonomy == "category" %}
+                         <select name="taxonomy">
+                          <option value="tag">Tag</option>
+                          <option value="category"selected>Category</option>
+                         </select>
+                         {% endif %}
+                       </label>
+                      </div>
+                      <div class="small-4 columns">
+                        <label>Parent<input type="text" name="parent" value="{{term.parent}}"/></label>
+                      <div>
+                     </div>
+
+				 
 				   <button class="button "  type="submit">Update</button>
                   </form>
-                </fieldset>  
-				      
-  
-                      			   
+                </fieldset>
+
+
+
 				</div>
 			  </div>
-			  
-			 
+
+
 			 {% endblock %}
-			
-   
-  
-   
+
+
+
+
 
 
   <
-   
-  
-   
-
