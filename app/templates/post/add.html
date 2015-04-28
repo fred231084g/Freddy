@@ -13,24 +13,12 @@
                   <label>URL<input type="text" name="slug" required/></label>
                   <label>Body<textarea type="text" id="content" name="content" rows="20" ></textarea></label>
 
-                  <label>Type<input type="text" name="post_type" value="post" required/></label>
-                  <label>Author<input type="text" name="author" value="{{current_user.name}}" disabled/></label>
-                  <div class="row">
-                    <div class="small-4 columns">
-                    <label>Category
-                       <select name="category">
-                           {% for term in terms %}
-                              {%if term.taxonomy == "category"%}
-                            <option value={{term.id}} selected>{{term.name}}</option>
-                               {%endif%}
-                           {% endfor %}
-                           </select>
-                  <label>Tag<input type="text" name="tag" /></label>
-
-                  </label></div>
-                    <div class="row">
+                  
+                  <label>Author<input type="text" name="author" value="{{ current_user.id }}" /></label>
+                   <label>Type<input type="text" name="post_type" value="post" required/></label>
+                   <div class="row">
                        <div class="small-2 columns">
-                         <label>Published
+                         <label>Status
                            <select name="status">
                             <option value="publish"selected>Publish</option>
                             <option value="draft">Draft</option>
@@ -38,6 +26,30 @@
                          </label>
                         </div>
                        </div>
+                  <div class="row">
+                    <div class="small-4 columns">
+                    <label>Category
+                       <select name="term_id" multiple>
+                           {% for term in terms %}
+                              {%if term.taxonomy == "category"%}
+                            <option value={{term.id}}>{{term.name}}</option>
+                               {%endif%}
+                           {% endfor %}
+                           </select>
+                           </div>
+                       <div class="small-4 columns">    
+                        <label>Tag
+                       <select name="term_id" multiple>
+                           {% for term in terms %}
+                              {%if term.taxonomy == "tag"%}
+                            <option value={{term.id}} >{{term.name}}</option>
+                               {%endif%}
+                           {% endfor %}
+                           </select>
+                  
+
+                  </label></div>
+                  </div> 
 
                   <button class="button "  type="submit">Save</button>
                   </form>

@@ -9,36 +9,74 @@
             <div class="large-12 columns">
                <fieldset>
                   <form action="" method="POST">
+                 
 
-                  <input type="hidden" name="author" value="1" required/>
                   <label>Title<input type="text" name="title" value="{{post.title}}" required/></label>
+                  <label>URL<input type="text" name="slug" value="{{post.slug}}" required/></label>
                   <label>Body<textarea type="text" id="content" name="content" rows="20">{{post.content}}</textarea></label>
-                  <label>URL<input type="text" name="url" value="{{post.slug}}" required/></label>
-                  <div class="row"><div class="small-4 columns">
-                   <label>Category
-                       <select name="category">
-                           {% for term in terms %}
-                            <option value={{term.id}} selected>{{term.name}}</option>
-                           {% endfor %}
-                           </select>
-                       </label>
-                     </div>
+                  <label>Author<input type="text" name="author" value="{{ post.author}}" /></label>
+                   <label>Type<input type="text" name="post_type" value="{{post.post_type}}" required/></label>
                     <div class="row">
                        <div class="small-2 columns">
-                         <label>Published
-                            <select name="published">
-                            {% if post.published == 1 %}
-                                <option value="1"selected>Yes</option>
-                                <option value="0">No</option>
+                         <label>Status
+                            <select name="status">
+                            {% if post.status == "publish" %}
+                                <option value="publish"selected>Publish</option>
+                                <option value="draft">Draft</option>
                              {% else %}
-                                 <option value="1">Yes</option>
-                                 <option value="0"selected>No</option>
+                                 <option value="publish">Publish</option>
+                                 <option value="draft"selected>Draft</option>
                               {% endif %}
                            </select>
                          </label>
                         </div>
                        </div>
+                 
 
+  
+           
+                      <div class="row">
+                    <div class="small-4 columns">
+                    <label>Category
+                       <select name="term_id" multiple>
+                           {% for term in terms %}
+                                {%if term.taxonomy == "category" %}                             
+                                    {% if term.id in post_terms %}                                                
+                                        <option value={{term.id}} selected>{{term.name}}</option> 
+                                    
+                                     {% else %} 
+                                        <option value={{term.id}} >{{term.name}}</option> 
+                                                                          
+                                    {% endif %}
+                                       
+                                {% endif %} 
+                                                   
+                           {% endfor %}
+                         </select> </label>
+                        </div>
+                        
+                    <div class="small-4 columns">
+                    <label>Category
+                       <select name="term_id" multiple>
+                           {% for term in terms %}
+                                {%if term.taxonomy == "tag" %}                             
+                                    {% if term.id in post_terms %}                                                
+                                        <option value={{term.id}} selected>{{term.name}}</option> 
+                                    
+                                     {% else %} 
+                                        <option value={{term.id}} >{{term.name}}</option> 
+                                                                          
+                                    {% endif %}
+                                       
+                                {% endif %} 
+                                                   
+                           {% endfor %}
+                         </select> </label>
+                        </div>     
+                      
+                  
+
+                 </div>
                   <button class="button "  type="submit">Save</button>
                   </form>
                 </fieldset>
@@ -53,3 +91,28 @@
 
         </script>
   {% endblock %}
+<!--
+ 
+ {% for term in terms %}
+   {%if term.taxonomy == "category" %}
+        term id:{{ term.id}}<br>
+     
+        {% if term.id in post_terms %}
+                                    
+                                       
+                                       
+                                      
+                                      
+                       selected:{{term.id}}<br>
+                     
+               {% else %} 
+                       notselected:{{term.id}}</br>
+                                                            
+                {% endif %}
+        
+    {%endif %}                              
+                                                                          
+                                     
+                                   
+                            
+                           {% endfor %} -->

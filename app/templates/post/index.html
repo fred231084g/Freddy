@@ -1,33 +1,25 @@
-
- {% extends "/admin/layout.html" %}
+{% extends "/admin/layout.html" %}
  {% block body %}
       <!-- Main Page Content and Sidebar -->
 
    <div class="center row">
-      <div class="small-8 columns"><p><h4 style="display:inline">Posts  </h4><a href="{{ url_for('post_add')}}">Add new</a></p></div>
-
-    </div>
-      <hr />
-
-
-           <div class="center row">
+      <div class="small-8 columns"><p><h4 style="display:inline"> Posts  </h4><a href="{{ url_for('post_add')}}">Add new</a></p></div>
+    </div><hr/>
+    <div class="center row">
              <div class="small-12 columns">
              <table>
-              <thead><tr><th>Title</th><th>Comment Count</th><th>Category</th><th>Published</th><th>Actions</th></tr></thead>
+             <thead><tr><th>Title</th><th>URL</th><th>Author</th><th>Type</th><th>status</th><th>Comment Count</th><th>Actions</th></tr></thead>
               <tbody>
                 <tr>
                 {% for post in post %}
 
                   <td><a href="{{ url_for('single_post', id=post.id, slug=post.slug) }}">{{ post.title }}</a></td>
+                   <td>{{ post.slug }}</td>
+                    <td>{{ post.user.name }}</td>
+                     <td>{{ post.post_type }}</td>
+                      <td>{{ post.status }}</td>
                   <td>{{ post.comments.count() }}</td>
-                  {% for term in terms %}
-                     {%  if term.id==post.category %}
-                     <td>{{ term.name }}</td>
-                      {%  endif %}
-                    {% endfor %}
-
-                  <td>{{ post.published }}</td>
-                  <td><a href="{{ url_for('post_update', id=post.id) }}">Edit</a>
+                   <td><a href="{{ url_for('post_update', id=post.id) }}">Edit</a>
                   <a href="{{ url_for('post_delete', id=post.id) }}">Delete</a></td>
                  </tr>
                 {% endfor %}

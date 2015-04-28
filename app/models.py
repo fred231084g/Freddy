@@ -13,7 +13,7 @@ class Users(db.Model, UserMixin):
   #User is active if status is 0
   status = db.Column(db.Integer(), server_default='0', nullable=False)
   activation_key=db.Column(db.String(255))
-  posts = db.relationship('Post', backref='user')
+  posts = db.relationship('Posts', backref='user')
 
 
   def __init__(self,email,password,name):
@@ -36,8 +36,12 @@ class Users(db.Model, UserMixin):
      return session_commit()
 
 
-term_relationships=db.Table('term_relationships',db.Column('id', db.Integer, primary_key=True),  db.Column('post_id', db.Integer,db.ForeignKey('post.id'), nullable=False),
-                             db.Column('term_id',db.Integer,db.ForeignKey('terms.id'),nullable=False))
+term_relationships=db.Table('term_relationships',
+                              
+                             db.Column('post_id', db.Integer,db.ForeignKey('posts.id'), nullable=False),
+                             db.Column('term_id',db.Integer,db.ForeignKey('terms.id'),nullable=False), 
+                             db.PrimaryKeyConstraint('post_id', 'term_id')
+                             )
 
 class TermRelationships():
     def __init__(self,post_id,term_id):
@@ -47,13 +51,13 @@ class TermRelationships():
 db.mapper(TermRelationships, term_relationships)
 
 #make table name plural
-class Post(db.Model):
+class Posts(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   author = db.Column(db.Integer, db.ForeignKey('users.id'))
   title = db.Column(db.String(255),nullable=False)
   slug = db.Column(db.String(255), nullable=False)
   #Remove created_on and make default like wordpress
-  date=db.Column(db.TIMESTAMP,server_default='0000-00-00 00:00:00', nullable=False)
+  date=db.Column(db.TIMESTAMP)
   created_on=db.Column(db.TIMESTAMP,server_default=db.func.current_timestamp(), nullable=False)
   content = db.Column(db.Text)
   #Remove publish, status will replace publish
@@ -62,7 +66,7 @@ class Post(db.Model):
   #Need to make not null
   modified = db.Column(db.TIMESTAMP,server_default=db.func.current_timestamp(),nullable=False)
   post_type=db.Column(db.String(20), server_default='post', nullable=False)
-  terms=db.relationship('Terms', secondary=term_relationships, backref='posts')
+  terms=db.relationship('Terms', secondary=term_relationships, backref='posts' )
   comments = db.relationship('Comment', backref="post", cascade="all, delete-orphan" , lazy='dynamic')
 
 
@@ -88,7 +92,7 @@ class Post(db.Model):
 
 class PostMeta(db.Model):
   id = db.Column(db.Integer, primary_key=True)
-  post_id=db.Column(db.Integer,db.ForeignKey('post.id'))
+  post_id=db.Column(db.Integer,db.ForeignKey('posts.id'))
   key=db.Column(db.String(255))
   value=db.Column(db.Text)
 
@@ -146,7 +150,7 @@ class Comment(db.Model):
   website = db.Column(db.String(255))
   content = db.Column(db.Text, nullable=False)
   approved = db.Column(db.Boolean, default=1)
-  post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+  post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
 
   def __init__(self, author,website, content,post_id,approved):
         self.author = author
