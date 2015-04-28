@@ -49,14 +49,14 @@
                                                                           
                                     {% endif %}
                                        
-                                {% endif %} 
+                                {% endif %}
                                                    
                            {% endfor %}
                          </select> </label>
                         </div>
                         
                     <div class="small-4 columns">
-                    <label>Category
+                    <label>Tag
                        <select name="term_id" multiple>
                            {% for term in terms %}
                                 {%if term.taxonomy == "tag" %}                             
