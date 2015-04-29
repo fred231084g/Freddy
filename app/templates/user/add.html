@@ -1,19 +1,18 @@
 {% extends "/admin/layout.html" %}
  {% block body %}
         <div class="center row">
-            <div class="large-12 columns">
+            <div class="large-8 columns">
                <fieldset>  
                 <form action="/user/add" method="POST"> 
   
-				  <input type="text" placeholder="name" name="name" required/>	    
-				  <input type="email" placeholder="email" name="email" required/>
-				   <input type="password" placeholder="password"  name="password"  required/>
+				  <label>Name <small>required</small><input type="text" name="name" pattern="/^[a-z\s]+$/i" required/>	 </label>   
+				 <label>Email <small>required</small> <input type="email" placeholder="email" name="email" required/> </label> 
+				 <label>Password <small>required</small>  <input type="password" placeholder="password"  name="password"  required/> </label> 
 				   <button class="button "  type="submit">Add</button>
                   </form>
                 </fieldset>  
 				      
-  
-                      			   
+            			   
 				</div>
 			  </div>
 			  
