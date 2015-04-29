@@ -6,11 +6,12 @@
         <div class="center row">
             <div class="large-8 columns">
               <h4> Add terms</h4>
-               <fieldset>
-                  <form action="" method="POST">
-
-                  <label>Term Name<input type="text" name="name" required/></label>
-                  <label>Slug<input type="text" name="slug" required/></label>
+              
+               <fieldset>                
+                <form action="" method="POST">
+                  
+                  <label>Term Name <small>required</small><input type="text" name="name" required/></label>
+                  <label>Slug <small>required</small><input type="text" name="slug"   pattern="alpha_numeric"  title=" Slug must be Alpha Numeric" required/></label>
                   <label>Description<input type="text" name="description" /></label>
                   <div class="row">
                      <div class="small-4 columns">
@@ -22,13 +23,22 @@
                        </label>
                       </div>
                       <div class="small-4 columns">
-                        <label>Parent<input type="text" name="parent" value="0"/></label>
-                      <div>
-                     </div>
-
-                  <button class="button "  type="submit">Add</button>
+                       <label>Parent<input type="number" name="parent" value="0"/></label> 
+                      </div>
+                    </div>
+                    
+                   
+                      <button class="button "  type="submit">Add</button>
+                               
+                   
+                    
+                  
                   </form>
-                </fieldset>
+                  </fieldset>
+                
+                
+                 
+              
             </div>
         </div>
 
