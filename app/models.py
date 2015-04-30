@@ -56,12 +56,8 @@ class Posts(db.Model):
   author = db.Column(db.Integer, db.ForeignKey('users.id'))
   title = db.Column(db.String(255),nullable=False)
   slug = db.Column(db.String(255), nullable=False)
-  #Remove created_on and make default like wordpress
-  date=db.Column(db.TIMESTAMP)
   created_on=db.Column(db.TIMESTAMP,server_default=db.func.current_timestamp(), nullable=False)
   content = db.Column(db.Text)
-  #Remove publish, status will replace publish
-  published = db.Column(db.Boolean, default=True, nullable=False)
   status = db.Column(db.String(20), server_default='publish', nullable=False)
   #Need to make not null
   modified = db.Column(db.TIMESTAMP,server_default=db.func.current_timestamp(),nullable=False)

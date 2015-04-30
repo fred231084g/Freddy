@@ -10,10 +10,10 @@
  <div class="center row">
              <div class="small-12 columns">
              
-            <table> <thead><tr><th>Name</th><th>Slug</th><th>Description</th><th>Taxonomy</th><th>Parent</th></tr></thead>
+            <table> <thead><tr><th>Name</th><th>Slug</th><th>Description</th><th>Taxonomy</th><th>Posts</th><th>Parent</th></tr></thead>
              <tbody>
              {% for term in terms %}
-              <tr><td>{{term.name}}</td><td>{{term.slug}}</td><td>{{term.description}}</td><td>{{term.taxonomy}}</td><td>{{term.parent}}</td>
+              <tr><td>{{term.name}}</td><td>{{term.slug}}</td><td>{{term.description}}</td><td>{{term.taxonomy}}</td><td>{{term.posts |length}}</td><td>{{term.parent}}</td>
                   <td><a href="{{ url_for('term_update', id=term.id) }}">Edit</a>        <a href="{{ url_for('term_delete', id=term.id) }}">Delete</a></td>
                 </tr>
                 {% endfor %}
