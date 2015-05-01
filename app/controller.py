@@ -42,8 +42,8 @@ def post_add():
         for id in term_ids:
            term=Terms.query.get(id)
            post.terms.append(term)
-        
-        
+
+
         return add(post, post_index, post_add)
 
     return render_template('/post/add.html', terms=terms)
@@ -58,16 +58,23 @@ def post_update (id):
     terms=Terms.query.all()
     if request.method == 'POST':
             post.author=request.form['author']
-            post.title = request.form['title'] 
+            post.title = request.form['title']
             post.slug = slugify(request.form['slug'])
-            post.content =  request.form['content'] 
-            post.status=request.form['status'] 
+            post.content =  request.form['content']
+            post.status=request.form['status']
             post.post_type=request.form['post_type']
             new_post_terms=request.form.getlist('term_id')
+            #Add new post terms
             for term_id in new_post_terms:
-               if term_id not in post_terms:
-                   term=Terms.query.get(term_id)
-                   post.terms.append(term)
+                if term_id not in post_terms:
+                  term=Terms.query.get(term_id)
+                  post.terms.append(term)
+            #Remove old post terms which are not included in the update.
+            for post_term_id in post_terms:
+                if post_term_id not in new_post_terms:
+                      term=Terms.query.get(post_term_id)
+                      post.terms.remove(term)
+
             return update(post, post_index, post_update, id)
 
     return render_template('post/update.html', post=post, terms=terms, post_terms=post_terms)

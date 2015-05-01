@@ -37,9 +37,9 @@ class Users(db.Model, UserMixin):
 
 
 term_relationships=db.Table('term_relationships',
-                              
+
                              db.Column('post_id', db.Integer,db.ForeignKey('posts.id'), nullable=False),
-                             db.Column('term_id',db.Integer,db.ForeignKey('terms.id'),nullable=False), 
+                             db.Column('term_id',db.Integer,db.ForeignKey('terms.id'),nullable=False),
                              db.PrimaryKeyConstraint('post_id', 'term_id')
                              )
 
@@ -50,7 +50,6 @@ class TermRelationships():
 
 db.mapper(TermRelationships, term_relationships)
 
-#make table name plural
 class Posts(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   author = db.Column(db.Integer, db.ForeignKey('users.id'))
