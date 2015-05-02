@@ -1,6 +1,10 @@
 
   {% extends "/admin/layout.html" %}
  {% block body %}
+
+ {% from 'terms/_form.html' import term_form %}
+ {{ term_form(form_name = 'Update', name = term.name, slug = term.slug, description = term.description,taxonomy = term.taxonomy, parent = term.parent ) }}
+ <!--
         <div class="center row">
             <div class="large-12 columns">
                <fieldset>
@@ -10,13 +14,13 @@
                   <label>Slug<input type="text" name="slug" value="{{term.slug}}" required/></label>
                   <label>Description<input type="text" name="description" value="{{term.description}}" /></label>
                   <label>taxonomy<input type="text" name="taxonomy" value="{{term.taxonomy}}" /></label>
-                  
-                     
+
+
                         <label>Parent<input type="text" name="parent" value="{{term.parent}}"/></label>
                       <div>
                      </div>
 
-				 
+
 				   <button class="button "  type="submit">Update</button>
                   </form>
                 </fieldset>
@@ -24,7 +28,7 @@
 
 
 				</div>
-			  </div>
+      </div> -->
 
 
 			 {% endblock %}

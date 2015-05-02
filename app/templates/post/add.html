@@ -13,7 +13,7 @@
                   <label>URL<input type="text" name="slug" required/></label>
                   <label>Body<textarea type="text" id="content" name="content" rows="20" ></textarea></label>
 
-                  
+
                   <label>Author<input type="text" name="author" value="{{ current_user.id }}" /></label>
                    <label>Type<input type="text" name="post_type" value="post" required/></label>
                    <div class="row">
@@ -37,7 +37,7 @@
                            {% endfor %}
                            </select>
                            </div>
-                       <div class="small-4 columns">    
+                       <div class="small-4 columns">
                         <label>Tag
                        <select name="term_id" multiple>
                            {% for term in terms %}
@@ -46,10 +46,10 @@
                                {%endif%}
                            {% endfor %}
                            </select>
-                  
+
 
                   </label></div>
-                  </div> 
+                  </div>
 
                   <button class="button "  type="submit">Save</button>
                   </form>

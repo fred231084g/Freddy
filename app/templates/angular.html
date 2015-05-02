@@ -1,0 +1,23 @@
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+<script>
+var demoapp = angular.module('demoapp', []);
+
+demoapp.controller('SimpleController', function($scope, $http) {
+   $http.get('/terms')
+   .success(function(response){
+       $scope.names = response.terms;  })
+});
+</script>
+
+{% raw %}
+<div ng-app="demoapp" ng-controller="SimpleController">
+
+{{names}}
+<ul>
+  <li ng-repeat="term in terms">
+    {{ term.id + ', ' + term.name}}
+  </li>
+</ul>
+{% endraw %}
+
+</div>
