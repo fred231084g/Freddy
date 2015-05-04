@@ -153,10 +153,13 @@ def user_update (id):
     #Get user by primary key:
     user=Users.query.get_or_404(id)
     if request.method == 'POST':
-            user.email=request.form['email']
-            user.password = request.form['password']
+            user.email = request.form['email']
             user.name =  request.form['name']
-            return update(user, user_index, user_update, id)
+            if not request.form['password'] :
+              return update(user, user_index, user_update, id)
+            else:
+              user.password = generate_password_hash(request.form['password'])
+              return update(user, user_index, user_update, id)              
 
     return render_template('/user/update.html', user=user)
 
