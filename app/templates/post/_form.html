@@ -1,4 +1,4 @@
-{% macro post_form(form_name = "", title = "", slug = "", content = "", author = "", status = "publish",  terms = "" , post_terms = "" )%}
+{% macro post_form(form_name = "", title = "", slug = "", content = "", author = "",  post_type = "post",  status = "publish",  terms = "" , post_terms = "" )%}
 
     <!--CKeditor -->
     <script src="//cdn.ckeditor.com/4.4.7/standard/ckeditor.js"></script>
@@ -8,12 +8,12 @@
         <div class="center row">
             <div class="large-12 columns">
                <fieldset>
-                  <form action="/post/add" method="POST">
-                  <label>Title<input type="text" name="title" required/></label>
-                  <label>URL<input type="text"   name="slug" pattern="[\w\s-]{2,255}" title="Slug can contain alphanumeric/_/- chars or spaces with a min of 2 and a max of 255 chars" required/></label>
-                  <label>Body<textarea type="text" id="content" name="content" rows="20" ></textarea></label>
+                  <form action=" " method="POST">
+                  <label>Title<input type="text" name="title"  value = "{{ title}} "required/></label>
+                  <label>URL<input type="text"   name="slug"  value = "{{ slug}} " pattern="[\w\s-]{2,255}" title="Slug can contain alphanumeric/_/- chars or spaces with a min of 2 and a max of 255 chars" required/></label>
+                  <label>Body<textarea type="text" id="content" name="content" value = "{{ content}} " rows="20" ></textarea></label>
                   <input type="hidden" name="author" value="{{ author }}"  required/>
-                   <label>Type<input type="text" name="post_type" value="post" pattern="[\w\s-]{2,255}" title="Type can contain alphanumeric/_/- chars or spaces with a min of 2 and a max of 255 chars" required/></label>
+                   <label>Type<input type="text" name="post_type" value = "{{ post_type}} " pattern="[\w\s-]{2,255}" title="Type can contain alphanumeric/_/- chars or spaces with a min of 2 and a max of 255 chars" required/></label>
                    
                    {% if status == "publish" %}
                      <div class="row">
