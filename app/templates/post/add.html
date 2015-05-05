@@ -1,70 +1,7 @@
  {% extends "/admin/layout.html" %}
  {% block body %}
-      <!--CKeditor -->
-    <script src="//cdn.ckeditor.com/4.4.7/standard/ckeditor.js"></script>
-  <!--CKeditor end -->
-
-
-        <div class="center row">
-            <div class="large-12 columns">
-               <fieldset>
-                  <form action="/post/add" method="POST">
-                  <label>Title<input type="text" name="title" required/></label>
-                  <label>URL<input type="text" name="slug" required/></label>
-                  <label>Body<textarea type="text" id="content" name="content" rows="20" ></textarea></label>
-
-
-                  <label>Author<input type="text" name="author" value="{{ current_user.id }}" /></label>
-                   <label>Type<input type="text" name="post_type" value="post" required/></label>
-                   <div class="row">
-                       <div class="small-2 columns">
-                         <label>Status
-                           <select name="status">
-                            <option value="publish"selected>Publish</option>
-                            <option value="draft">Draft</option>
-                           </select>
-                         </label>
-                        </div>
-                       </div>
-                  <div class="row">
-                    <div class="small-4 columns">
-                    <label>Category
-                       <select name="term_id" multiple>
-                           {% for term in terms %}
-                              {%if term.taxonomy == "category"%}
-                            <option value={{term.id}}>{{term.name}}</option>
-                               {%endif%}
-                           {% endfor %}
-                           </select>
-                           </div>
-                       <div class="small-4 columns">
-                        <label>Tag
-                       <select name="term_id" multiple>
-                           {% for term in terms %}
-                              {%if term.taxonomy == "tag"%}
-                            <option value={{term.id}} >{{term.name}}</option>
-                               {%endif%}
-                           {% endfor %}
-                           </select>
-
-
-                  </label></div>
-                  </div>
-
-                  <button class="button "  type="submit">Save</button>
-                  </form>
-                </fieldset>
-            </div>
-        </div>
-
-<!-- CKeditor config http://docs.ckeditor.com/#!/guide/dev_configuration -->
-      <script>
-            CKEDITOR.replace( 'content', {
-              height: 500
-            });
-
-        </script>
-
+     {% from 'post/_form.html' import post_form %}
+         {{ post_form(form_name='Add', author = current_user.id, terms = terms ) }}
 
 
   {% endblock %}
