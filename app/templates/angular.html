@@ -3,19 +3,19 @@
 var demoapp = angular.module('demoapp', []);
 
 demoapp.controller('SimpleController', function($scope, $http) {
-   $http.get('/terms')
-   .success(function(response){
-       $scope.names = response.terms;  })
+   $http.get('/data')
+   .success(function(data){
+       $scope.dict = data;  })
 });
 </script>
 
 {% raw %}
 <div ng-app="demoapp" ng-controller="SimpleController">
 
-{{names}}
+{{dict}}
 <ul>
-  <li ng-repeat="term in terms">
-    {{ term.id + ', ' + term.name}}
+  <li ng-repeat="key in dict">
+    {{ key.name}},{{ key.date}}, {{ key.goal }}
   </li>
 </ul>
 {% endraw %}

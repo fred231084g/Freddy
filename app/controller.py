@@ -1,6 +1,6 @@
 from flask import render_template, request,flash, redirect, url_for, abort
 from app import app, db
-from app.models import Posts,Comment,Users, Terms
+from app.models import Posts,Comments,Users, Terms
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask.ext.login import LoginManager, login_user,UserMixin, logout_user, login_required
 from slugify import slugify
@@ -89,31 +89,35 @@ def post_delete (id):
 @app.route('/comment/' )
 @login_required
 def comment_index():
-  comments = Comment.query.all()
+  comments = Comments.query.all()
   return render_template('/comment/index.html', comments=comments)
 
-
-@app.route('/comment/add/<post_id>', methods=['POST'])
+#Here id is post_id
+@app.route('/comment/add/<id>', methods=['POST'])
 @login_required
-def comment_add(post_id):
-    post = Posts.query.get(post_id)
-    if request.method == 'POST':
-           comment=Comment(request.form['author'], request.form['website'], request.form['content'],post_id,request.form['approved'])
-           comment_add=comment.add(comment)
-           if not comment_add:
-               flash("Add was successful")
-           else:
-               flash("Oops something went wrong")
-           return redirect(url_for('single_post', id=post.id, slug=post.slug))
+def comment_add(id):
+  post = Posts.query.get(id)
+  #Add error check here
+  if request.method == 'POST':
+    comment = Comments(id, request.form['author_name'], request.form['author_email'],
+                       0, request.remote_addr, request.form['content'], 0, 0,
+                       request.headers['User-Agent'], 0, 0)
+    comment_add=comment.add(comment)
+    if not comment_add:
+      flash("Add was successful")
+    else:
+      message = comment_add
+      flash(message)
+    return redirect(url_for('single_post', id=post.id, slug=post.slug))
 
 
 @app.route('/comment/update/<id>', methods=['POST', 'GET'])
 @login_required
 def comment_update (id):
-    comment = Comment.query.get_or_404(id)
+    comment = Comments.query.get_or_404(id)
     if request.method == 'POST':
-            comment.author=request.form['author']
-            comment.website=request.form['website']
+            comment.author_name = request.form['author_name']
+            comment.author_email = request.form['author_email']
             comment.content=request.form['content']
             comment.approved=request.form['approved']
             return update(comment, comment_index, comment_update, id)
@@ -125,7 +129,7 @@ def comment_update (id):
 @app.route('/comment/delete/<id>', methods=['POST', 'GET'])
 @login_required
 def comment_delete (id):
-    comment = Comment.query.get_or_404(id)
+    comment = Comments.query.get_or_404(id)
     return delete(comment, comment_index)
 
 #Users
@@ -159,7 +163,7 @@ def user_update (id):
               return update(user, user_index, user_update, id)
             else:
               user.password = generate_password_hash(request.form['password'])
-              return update(user, user_index, user_update, id)              
+              return update(user, user_index, user_update, id)
 
     return render_template('/user/update.html', user=user)
 

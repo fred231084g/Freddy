@@ -2,6 +2,9 @@ from app import db
 from flask.ext.login import LoginManager, login_user,UserMixin, logout_user
 from sqlalchemy.sql.expression import text
 from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.dialects.postgresql import INET
+
+
 
 
 class Users(db.Model, UserMixin):
@@ -62,7 +65,7 @@ class Posts(db.Model):
   modified = db.Column(db.TIMESTAMP,server_default=db.func.current_timestamp(),nullable=False)
   post_type=db.Column(db.String(20), server_default='post', nullable=False)
   terms=db.relationship('Terms', secondary=term_relationships, backref='posts' )
-  comments = db.relationship('Comment', backref="post", cascade="all, delete-orphan" , lazy='dynamic')
+  comments = db.relationship('Comments', backref="post", cascade="all, delete-orphan" , lazy='dynamic')
 
 
   def __init__(self, author,title,slug, content,status,post_type):
@@ -87,7 +90,7 @@ class Posts(db.Model):
 
 class PostMeta(db.Model):
   id = db.Column(db.Integer, primary_key=True)
-  post_id=db.Column(db.Integer,db.ForeignKey('posts.id'))
+  post_id=db.Column(db.Integer,db.ForeignKey('posts.id'), nullable = False)
   key=db.Column(db.String(255))
   value=db.Column(db.Text)
 
@@ -135,27 +138,36 @@ class Terms(db.Model):
          db.session.delete(term)
          return session_commit()
 
-
-
-
-class Comment(db.Model):
+class Comments(db.Model):
   id = db.Column(db.Integer, primary_key=True)
-  author = db.Column(db.String(128),nullable=False)
+  post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), nullable=False)
+  author_name = db.Column(db.String(255),nullable=False)
+  author_email = db.Column(db.String(255),nullable=False)
+  author_url = db.Column(db.String(255))
+  author_ip = db.Column(INET, nullable=False)
   created_on = db.Column(db.TIMESTAMP,server_default=db.func.current_timestamp(),nullable=False)
-  website = db.Column(db.String(255))
   content = db.Column(db.Text, nullable=False)
-  approved = db.Column(db.Boolean, default=1)
-  post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
+  karma = db.Column(db.Integer, default = 0)
+  approved = db.Column(db.String(20), default=0, nullable=False)
+  agent = db.Column(db.Text, nullable=False)
+  _type = db.Column(db.String(20))
+  parent = db.Column(db.Integer, default = 0, nullable=False)
 
-  def __init__(self, author,website, content,post_id,approved):
-        self.author = author
-        self.website = website
-        self.content=content
-        self.approved=approved
-        self.post_id=post_id
 
-  def get_id(self):
-    return unicode(self.id)
+
+  def __init__(self, post_id, author_name, author_email, author_url, author_ip, content, karma,
+                approved, agent, _type, parent):
+        self.post_id = post_id
+        self.author_name = author_name
+        self.author_email = author_email
+        self.author_url = author_url
+        self.author_ip = author_ip
+        self.content = content
+        self.karma = karma
+        self.approved = approved
+        self.agent = agent
+        self._type = _type
+        self.parent = parent
 
   def add(self, comment):
       db.session.add(comment)
@@ -168,6 +180,28 @@ class Comment(db.Model):
      db.session.delete(comment)
      return session_commit()
 
+class CommentMeta(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  comment_id = db.Column(db.Integer,db.ForeignKey('comments.id'), nullable=False)
+  key = db.Column(db.String(255))
+  value = db.Column(db.Text)
+
+  def __init__(self, comment_id,key,value):
+        self.comment_id = comment_id
+        self.key = key
+        self.value = value
+
+  def add(self,comment_meta):
+      db.session.add(post_meta)
+      return session_commit()
+
+  def update(self):
+      return session_commit()
+
+  def delete(self,post):
+     db.session.delete(post)
+     return session_commit()
+
 
 
 #Universal functions
@@ -176,5 +210,6 @@ def  session_commit ():
       try:
         db.session.commit()
       except SQLAlchemyError as e:
+         db.session.rollback()
          reason=str(e)
          return reason

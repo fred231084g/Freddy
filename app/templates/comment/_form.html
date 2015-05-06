@@ -1,28 +1,51 @@
 
-{% macro comments_form(form_name = "", name = "", email = "", content)%}
+{% macro comment_form(form_name = "", name = "", email = "", content = "", id = "",
+                      approved = "", function = "" )%}
+
+
 
    <div class="center row">
-            <div class="large-12 columns">
-                <fieldset>
-                    <form action="{{url_for('comment_add', post_id=post.id)}}"  method="POST">
-                       <input type="hidden" name="approved" value="1"/>
-                       <div class="row">
-                         <div class="small-6 columns">
-                            <input type="text" name="author" placeholder="Name" required/>
-                          </div>
-                          <div class="small-6 columns">
+      <div class="large-12 columns">
+          <fieldset>
+            <form action="{{url_for(function, id=id)}}"  method="POST">
 
-                           <input type="text" name="website"  placeholder="Website"/>
-                            </div>
-                            </div>
+               <div class="row">
+                 <div class="small-6 columns">
+                    <input type="text" name="author_name" placeholder = "Name" value = "{{ name }}" pattern="[\w\s-]{2,255}"
+                           title=" Name can contain alphanumeric/_/- chars or spaces with a min of 2 and
+                           a max of 255 chars" required/>
+                  </div>
+                  <div class="small-6 columns">
+                      <input type="email" name="author_email"  placeholder="Email" value = "{{ email }}" required/>
 
+                  </div>
+                </div>
+                <textarea type="text" name="content"  placeholder="Comment"  required>{{ content }}</textarea>
 
-                         <textarea name="content" placeholder="Comment"  required/></textarea>
+              {% if form_name == "Update" %}
 
-                        <button class="button tiny "  type="submit">Add</button>
+                <div class="row">
+                   <div class="small-2 columns">
+                     <label>Approved
+                        <select name="approved">
+                        {% if approved == 1 %}
+                            <option value="1"selected>Yes</option>
+                            <option value="0">No</option>
+                         {% else %}
+                             <option value="1">Yes</option>
+                             <option value="0"selected>No</option>
+                          {% endif %}
+                       </select>
+                     </label>
+                    </div>
+                   </div>
+
+                {% endif %}
+
+                        <button class="button tiny "  type="submit"> {{ form_name }}</button>
                    </form>
               </fieldset>
-              
+
             </div>
           </div>
 

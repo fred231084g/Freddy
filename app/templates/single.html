@@ -39,35 +39,21 @@
 
        <!--ADD COMENTS -->
 
-       <fieldset>
-                <form action="{{url_for('comment_add', post_id=post.id)}}"  method="POST">
-               <input type="hidden" name="approved" value="1"/>
-               <div class="row">
-                 <div class="small-6 columns">
-                    <input type="text" name="author" placeholder="Name" required/>
-                  </div>
-                  <div class="small-6 columns">
-
-                   <input type="text" name="website"  placeholder="Website"/>
-                    </div>
-                    </div>
-
-
-                 <textarea name="content" placeholder="Comment"  required/></textarea>
-
-                <button class="button tiny "  type="submit">Add</button>
-               </form>
-              </fieldset>
+       {% from 'comment/_form.html' import comment_form %}
+           {{ comment_form(form_name='Add', id = post.id, function = "comment_add") }}
 
            <!--END ADD COMENTS -->
 
-       {%for comment in post.comments.all()%}
-         <fieldset>
-         <span class="radius secondary label"> {{comment.author}}</span> </br>
-          <p>{{comment.content}}</p>
-          </fieldset>
+       {% for comment in post.comments.all() %}
+         {% if comment.approved == "1" %}
+           <fieldset>
+             <span class="radius secondary label"> {{ comment.author_name }}</span> </br>
+             <p>{{ comment.content }}</p>
+           </fieldset>
+         {% endif %}
 
-        {%endfor%}
+
+        {% endfor %}
 
 
        </div>
