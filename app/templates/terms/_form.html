@@ -1,0 +1,40 @@
+
+
+                 
+      
+				 
+    <input placeholder="name*" type="text" id="name" name="name"  ng-model="term.data.attributes.name"  required>
+       
+    <input placeholder="slug*" type="text" id="slug" name="slug"  ng-model="term.data.attributes.slug"  required>
+       
+    <input placeholder="description*" type="text" id="description" name="description"  ng-model="term.data.attributes.description" 
+    required>
+    
+     <select name="taxonomy" ng-model="term.data.attributes.taxonomy" required>
+                 <option value="" disabled="" selected="">Taxonomy*</option>
+                 <option   value="tag"> Tag </option>
+                 <option  value="category">Category </option>
+         </select>
+       
+    <input placeholder="parent*" type="hidden" id="parent" name="parent"  ng-model="term.data.attributes.parent"  required>
+       
+                     
+       
+
+    <div class="form-button" > 
+            <button  ng-disabled="loading" class="button-primary" type="submit" >                                        
+                              
+                              <span ng-hide="loading">Save</span>
+                              <span ng-show="loading">Loading....</span></button> 
+              
+       </div> 
+              
+
+         
+              
+              
+              
+
+  
+
+				

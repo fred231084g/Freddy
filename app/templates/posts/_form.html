@@ -1,0 +1,58 @@
+
+
+
+
+
+    <input placeholder="author*" type="text" id="author" name="author"  ng-model="post.data.attributes.author"  required>
+
+    <textarea type="text" placeholder="title*" name="title" id="title" ng-model="post.data.attributes.title"  required> </textarea>
+
+    <input placeholder="slug*" type="text" id="slug" name="slug"  ng-model="post.data.attributes.slug"  required>
+
+    <textarea type="text" placeholder="content*" name="content" id="content" ng-model="post.data.attributes.content"  required> </textarea>
+
+    <textarea type="text" placeholder="excerpt* limit 250"  name="excerpt" id="excerpt" ng-model="post.data.attributes.excerpt" maxlength="250" required> </textarea>
+
+
+     <label> Tags </label>
+     <select multiple="multiple" name="tags" ng-model="post.data.attributes.term_ids" required
+             ng-options="term.id as term.name group by term.taxonomy for term in terms"
+              >
+     </select>
+
+    <select name="status" ng-model="post.data.attributes.status" required>
+                 <option value="" disabled="" selected="">Status*</option>
+                 <option   value="draft"> Draft </option>
+                 <option  value="published">Publish </option>
+         </select>
+
+            <a href ng-init="image_gallery='false'" ng-click="image_gallery=!image_gallery"> Set Featured Image </a>
+
+
+
+  <div ng-hide="image_gallery" >
+
+
+      <div>
+
+        <span ng-repeat="selectedRow in gridOptions.selectedRows">
+          <a href ng-click = "post.data.attributes.path = selectedRow.path">Set</a>
+
+        </span>
+       </div>
+
+
+    <div ag-grid="gridOptions" class="ag-fresh" ></div>
+
+
+
+</div>
+
+
+    <div class="form-button" >
+            <button  ng-disabled="loading" class="button-primary" type="submit" >
+
+                              <span ng-hide="loading">Save</span>
+                              <span ng-show="loading">Loading....</span></button>
+
+       </div>

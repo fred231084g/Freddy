@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+  <html data-ng-app="App">
+  <head lang="en">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title ng-bind="$state.current.title" > </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="static/css/posts.css">
+  <link rel="stylesheet" href="static/css/font-awesome-4.6.3/css/font-awesome.min.css">
+  <!-- JS  -->
+    <script src="static/node_modules/angular/angular.min.js"></script>
+    <script type="text/javascript" src="static/js/main.js"></script>
+
+                        <!-- Controllers -->
+
+   <script type="text/javascript" src="static/node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
+     <script type="text/javascript" src="static/node_modules/angular-resource/angular-resource.min.js"></script>
+   
+    <script type="text/javascript" src="static/node_modules/angular-animate/angular-animate.min.js"></script>
+    <script src="static/node_modules/angular-google-analytics/dist/angular-google-analytics.js"></script>
+     <script type="text/javascript" src="static/node_modules/angularjs-toaster/toaster.min.js"></script>
+     <script type="text/javascript" src="static/node_modules/angular-sanitize/angular-sanitize.min.js"></script>
+
+  </head>
+<body>
+
+
+  <header>
+
+    <h2>The World is a book and those who do not travel read only one page. -  St. Augustine</h2>
+    <ul>
+    <a href="https://www.facebook.com/captaindevops" target="_blank"><i class="fa fa-facebook-official" style="font-size:24px; color:blue"></i></a>
+    <a href="https://www.instagram.com/leotravelnomad" target="_blank"><i class="fa fa-instagram" style="font-size:24px;color:brown"></i></a>
+    <a href="https://plus.google.com/u/0/b/104889801713275137574/+Techarena51leog/" target="_blank">  <i class="fa fa-google-plus-square" style="font-size:24px;color:red"></i></a>
+    <a href="https://twitter.com/CaptainDevops" target="_blank">  <i class="fa fa-twitter-square" style="font-size:24px;color:blue"></i></a>
+      <i class="fa fa-pinterest-square" style="font-size:24px;color:red"></i>
+    </ul>
+
+  </header>
+  <div class="main">
+
+  <nav>
+    <img src="https://b.thumbs.redditmedia.com/fjsnaSTjoTrXNTCvyRef8pMbC7KpSMuVLS1fKdMdbTg.jpg" >
+    <p> Leo is Passionate about Technology and Coding shares his experiences through the Blog </p>
+
+    <a ui-sref="index">Home</a>
+
+
+
+    </nav>
+	
+	
+  <article  ui-view>
+
+
+
+    </article>
+
+
+    <aside>
+
+
+
+      <input type="text" name="search"  value="Search">
+        </aside>
+  </div>
+<toaster-container></toaster-container>
+
+  <footer> </footer>
+
+</body>
+</html>

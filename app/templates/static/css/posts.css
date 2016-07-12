@@ -1,0 +1,109 @@
+@import url(https://fonts.googleapis.com/css?family=Bitter);
+
+/* http://www.theexpeditioner.com/ */
+
+
+body {
+  width:100%;
+}
+
+header{
+
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  border-bottom: 2px solid rgba(0,0,0,.1);
+   width:100%;
+
+}
+
+header  >  h2 {
+
+  text-align: center;
+}
+
+.main{
+  display: flex;
+  flex-flow: row nowrap;
+
+
+}
+
+article{
+ align-items: center;
+ display: flex;
+ flex-flow: column nowrap;
+  -webkit-flex-grow: 4; /* Safari */
+  flex-grow:         4;
+
+}
+
+aside {
+
+   /* width */
+ flex-basis: 20%;
+
+ align-items: center;
+ display: flex;
+ flex-flow: column nowrap;
+
+}
+
+aside > input{
+  margin-top:20%;
+ -webkit-border-radius: 5px;
+ -moz-border-radius: 5px;
+ border-radius: 5px;
+ font-size: 14pt;
+}
+
+nav {
+ flex-grow: 0;
+ /* width */
+ flex-basis: 25%;
+
+ align-items: center;
+ display: flex;
+ flex-flow: column nowrap;
+
+}
+
+nav > p {
+
+ text-align: center;
+ width: 30%;
+          }
+
+ nav > img {
+      margin-top:20%;
+  }
+
+nav  > a {  text-decoration: none;
+            border: 1px solid;
+            letter-spacing: 1px;
+            line-height: 30px;
+            cursor: pointer;
+            color: #808080;
+            text-align:center;
+             width:34%; }
+
+
+
+.flex-column {
+  
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: center;
+	
+}
+
+.post-title{
+  color: #333;
+}
+.post {
+  width:600px;
+  cursor: pointer;
+  color: #000;
+  text-decoration: none;
+
+   }

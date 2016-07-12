@@ -1,0 +1,41 @@
+
+        
+				 
+    <input placeholder="name*" type="text" id="name" name="name"  ng-model="file.data.attributes.name"  required>
+    
+    <! -- file -->
+    
+    <div>
+    <input type = "file" ngf-select  ng-model="file.data.attributes.path" name="path" ngf-pattern="'image/*'"
+    ngf-accept="'image/*'" ngf-max-size="20MB" required>
+    <img ngf-thumbnail="file.data.attributes.path" width="101" height="62">
+    <a ng-click="file.data.attributes.path = null" ng-show="file.data.attributes.path">Remove</a>
+    
+    </div>
+     
+        
+       
+    <textarea type="text" placeholder="tags*" name="tags" id="tags" ng-model="file.data.attributes.tags"  required> </textarea>                
+    <input placeholder="category*" type="text" id="category" name="category"  ng-model="file.data.attributes.category"  required>
+       
+                     
+       
+
+    <div class="form-button" > 
+            <button  ng-disabled="loading" class="button-primary" type="submit" >                                        
+                              
+                              <span ng-hide="loading">Save</span>
+                              <span ng-show="loading">Loading....</span></button> 
+              
+       </div> 
+      
+              
+
+         
+              
+              
+              
+
+  
+
+				

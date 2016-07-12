@@ -1,0 +1,19 @@
+
+ 
+
+
+  <div  class="flex-column" ng-repeat="post in posts" >  
+   
+
+
+
+    <a ui-sref="post({slug: post.slug, id: post.id})"><h2 class="post-title">{{ post.title }}</h2></a> 
+  
+   <img src="{{ post.path }}" height="600" width="600">   
+    
+  <p>{{ post.excerpt }}</p>
+   </div>
+    
+
+  
+
