@@ -1,0 +1,8 @@
+ {% extends "/admin/layout.html" %}
+
+    {% block body %}
+     {% from 'post/_form.html' import post_form %}
+          {{ post_form(form_name='Update', title = post.title, slug = post.slug, content = post.content, author = post.author, post_type = post.post_type, status = post.status,  terms = terms, 
+            post_terms = post_terms) }}
+         
+    {% endblock %}

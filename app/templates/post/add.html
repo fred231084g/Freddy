@@ -1,0 +1,6 @@
+ {% extends "/admin/layout.html" %}
+ {% block body %}
+     {% from 'post/_form.html' import post_form %}
+         {{ post_form(form_name='Add', author = current_user.id, terms = terms ) }}
+
+  {% endblock %}

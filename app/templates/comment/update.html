@@ -1,0 +1,10 @@
+ {% extends "/admin/layout.html" %}
+   {% block body %}
+
+   {% from 'comment/_form.html' import comment_form %}
+   {{ comment_form(form_name='Update',name = comment.author_name, email = comment.author_email,
+                   content = comment.content, id = comment.id, approved = comment.approved,
+                   function = "comment_update" )}}
+
+
+  {% endblock %}

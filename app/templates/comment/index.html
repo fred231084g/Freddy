@@ -1,0 +1,49 @@
+
+ {% extends "/admin/layout.html" %}
+ {% block body %}
+      <!-- Main Page Content and Sidebar -->
+
+   <div class="center row">
+      <div class="small-12 columns"><p><h4 style="display:inline">Comments </h4></p></div>
+    </div>
+      <hr />
+
+
+           <div class="center row">
+             <div class="small-12 columns">
+             <table>
+              <thead><th>Author</th><th>Email</th><th>Content</th><th>Approved</th><th>Date</th><th>Post</th>
+                      <th>IP</th></tr></thead>
+              <tbody>
+                <tr>
+                {% for comment in comments %}
+                  <td>{{ comment.author_name }}</td>
+                  <td>{{ comment.author_email }}</td>
+                  <td>{{ comment.content }}</td>
+                  {% if comment.approved == '1' %}
+                  <td>Yes</td>
+                   {% else %}
+                   <td>No</td>
+                    {% endif %}
+
+                  <td>{{comment.created_on}}</td>
+                  <td>{{comment.post.title}}</td>
+                  <td>{{comment.author_ip}}</td>
+                  <td><a href="{{ url_for('comment_update', id=comment.id) }}">Edit</a></td>
+                  <td><a href="{{ url_for('comment_delete', id=comment.id) }}">Delete</a></td>
+                 </tr>
+                {% endfor %}
+               </tbody>
+             </table>
+
+             </div>
+
+            </div>
+
+
+
+
+
+        <!-- End Main Content -->
+
+   {% endblock %}
