@@ -1,6 +1,6 @@
 config.py
 __pycache__
-migrations
+
 venv-3.4
 index.py
 app/__pycache__/
