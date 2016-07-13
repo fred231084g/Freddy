@@ -38,7 +38,7 @@ class CreateListPosts(Resource):
                          'excerpt'], request_dict['status'], request_dict['type'], request_dict['parent'], request_dict['path'])
             post_terms = request_dict['term_ids']
             for post_term in post_terms:
-                term=Terms.query.get(post_term['id'])
+                term=Terms.query.get(post_term)
                 post.terms.append(term)
             post.add(post)
 
