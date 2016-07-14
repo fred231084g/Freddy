@@ -1,7 +1,9 @@
+import os
+
 # DATABASE SETTINGS
 pg_db_username = 'nuxkdhzxuvlkbx'
 pg_db_password = 'GVSy1_tzaEkHqxQS0_hMeLL-J9'
-pg_db_name = 'djdbnrpjo5lin'
+pg_db_name = os.environ['PG_DB_PASSWORD']
 pg_db_hostname = 'ec2-54-243-249-159.compute-1.amazonaws.com'
 
 # MYSQL
