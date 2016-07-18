@@ -1,7 +1,11 @@
-angular.module('App', ['ui.router', 'ngResource', 'App.services', 'App.controllers','toaster', 'ngAnimate', 'angular-google-analytics', 'ngSanitize']);
+angular.module('App', ['ui.router', 'ngResource', 'App.services', 'App.controllers','toaster', 'ngAnimate', 
+                        'angular-google-analytics', 'ngSanitize', 'ezfb', 'ngRoute']);
 
 angular.module('App.services', []);
 
+// https://github.com/pc035860/angular-easyfb
+
+angular.module('App').constant('SOCIAL_PLUGINS', ['comments']);
 
 angular.module('App')
   .run( function($rootScope, $state){
@@ -11,7 +15,7 @@ angular.module('App')
                 }
     );
 
-angular.module('App').config(function( $stateProvider , $urlRouterProvider, AnalyticsProvider) {
+angular.module('App').config(function( $stateProvider , $urlRouterProvider, AnalyticsProvider, ezfbProvider, SOCIAL_PLUGINS, $routeProvider) {
 
 
     $urlRouterProvider.otherwise('/');
@@ -19,8 +23,25 @@ angular.module('App').config(function( $stateProvider , $urlRouterProvider, Anal
    // Google Analytics
     AnalyticsProvider.setAccount('UA-37519052-11');
     AnalyticsProvider.setDomainName('seven.leog.in');
-
-
+	
+   // https://github.com/pc035860/angular-easyfb
+   
+   ezfbProvider.setInitParams({
+    appId: '115533011960122',
+    version: 'v2.7'
+  });
+    
+   angular.forEach(SOCIAL_PLUGINS, function (dirTag) {
+    var routeName = dirTag;
+    
+   $routeProvider.when('/' + routeName, {
+      templateUrl: routeName + '.html'
+    });
+  });
+  
+ // https://github.com/pc035860/angular-easyfb 
+   
+ 
 $stateProvider.state('index', {
         // Note: abstract state cannot be loaded, but it still needs a ui-view for its children to populate.
         // https://github.com/angular-ui/ui-router/wiki/Nested-States-and-Nested-Views
@@ -111,7 +132,7 @@ angular.module('App.controllers').controller('AllPostsController', function($sco
                                                 });
                                               });
 
-}).controller('SinglePostController', function($scope, $state, $stateParams, ReadPost, toaster) {
+}).controller('SinglePostController', function($scope, $state, $stateParams, ReadPost, toaster, SOCIAL_PLUGINS) {
 
 
 
@@ -125,6 +146,37 @@ angular.module('App.controllers').controller('AllPostsController', function($sco
                                                 timeout: 0
                                                 });
                                                 });
+												
+												
+                    // Fb comments
+					
+					
+					 $scope.SOCIAL_PLUGINS = SOCIAL_PLUGINS;
+  
+					  $scope.pluginOn = true;
+					  $scope.rendering = false;
+					  
+					  $scope.goto = function (dirTag) {
+						$location.path('/' + dirTag);
+					  };
+					  
+					  $scope.isActive = function (dirTag) {
+						return ($location.path() === '/' + dirTag);
+					  };
+					  
+					  $scope.rendered = function () {
+						$scope.rendering = false;
+					  };
+					  
+					  $scope.$watch('pluginOn', function (newVal, oldVal) { 
+						if (newVal !== oldVal) {
+						  $scope.rendering = true;
+						}
+					  });
+					  
+					  $scope.$on('$routeChangeSuccess', function () {
+						$scope.rendering = true;
+					  });
 
 
 
