@@ -1,4 +1,4 @@
-Freddy is a Blog Engine Built using Python 3, Flask and Angularjs.
+Freddy is a Blog Engine Built using Python 3, Flask and Angularjs. Freddy can be used with Postgres or MySQL/MariaDB databases
 
 ### Features
 
@@ -9,6 +9,7 @@ Freddy is a Blog Engine Built using Python 3, Flask and Angularjs.
 - Builtin Social Media Support with Facebook comments
 - Tagging and Categories
 - Image Gallery
+- PostGres, MySQL and MariaDB Support
 
 
 ### Installation
