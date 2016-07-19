@@ -71,7 +71,7 @@ class PostsSchema(Schema):
     type = fields.String(validate=not_blank)
     path = fields.String()
     parent = fields.Integer(required=True)
-    terms  = fields.Nested(TermsSchema, many=True)
+    #terms  = fields.Nested(TermsSchema, many=True)
     #term_ids = fields.List(fields.Integer())
     term_ids = fields.Raw()
 

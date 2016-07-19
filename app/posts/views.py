@@ -80,9 +80,26 @@ class GetUpdateDeletePost(Resource):
         raw_dict = request.get_json(force=True)
         try:
             schema.validate(raw_dict)
+            #current post terms
+            post_terms=[]
+            for term in post.terms:
+                post_terms.append(term.id)
             request_dict = raw_dict['data']['attributes']
 
             for key, value in request_dict.items():
+                if key == "terms":
+                    continue
+                if key == "term_ids":
+                    for term_id in value:
+                        if term_id not in post_terms:
+                            term=Terms.query.get(term_id)
+                            post.terms.append(term)
+                    #Remove old post terms which are not included in the update.
+                    for post_term_id in post_terms:
+                        if post_term_id not in value:
+                              term=Terms.query.get(post_term_id)
+                              post.terms.remove(term)
+
                 setattr(post, key, value)
 
             post.update()
