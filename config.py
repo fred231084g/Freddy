@@ -1,8 +1,10 @@
+import os
+
 # DATABASE SETTINGS
-pg_db_username = 'postgres'
-pg_db_password = ''
-pg_db_name = 'freddy'
-pg_db_hostname = 'localhost'
+pg_db_username = 'nuxkdhzxuvlkbx'
+pg_db_password = 'os.environ['PG_DB_PASSWORD']'
+pg_db_name = ''
+pg_db_hostname = 'ec2-54-243-249-159.compute-1.amazonaws.com'
 
 # MYSQL
 mysql_db_username = 'root'
