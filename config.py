@@ -1,10 +1,10 @@
 import os
 
 # DATABASE SETTINGS
-pg_db_username = 'nuxkdhzxuvlkbx'
-pg_db_password = 'os.environ['PG_DB_PASSWORD']'
-pg_db_name = ''
-pg_db_hostname = 'ec2-54-243-249-159.compute-1.amazonaws.com'
+pg_db_username = 'postgres'
+pg_db_password = os.environ['PG_DB_PASSWORD']
+pg_db_name = 'freddy'
+pg_db_hostname = 'localhost'
 
 # MYSQL
 mysql_db_username = 'root'
@@ -20,7 +20,7 @@ SECRET_KEY = "SOME SECRET"
 
 #Folder to upload files must be inside the templates folder
 
-UPLOAD_FOLDER = "templates/static/images/"
+UPLOAD_FOLDER = "templates/static/images"
 
 # PostgreSQL
 SQLALCHEMY_DATABASE_URI = "postgresql://{DB_USER}:{DB_PASS}@{DB_ADDR}/{DB_NAME}".format(DB_USER=pg_db_username,
