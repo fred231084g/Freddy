@@ -6,6 +6,7 @@ Freddy is a Blog Engine Built using Python 3, Flask and Angularjs.
 - Built in Google Analytics Support
 - Client side routing for Speedier loading of Web Pages.
 - JSON Token based Authentication with ACL's
+- Builtin Social Media Support with Facebook comments
 - Tagging and Categories
 - Image Gallery
 
@@ -21,5 +22,11 @@ Freddy is a Blog Engine Built using Python 3, Flask and Angularjs.
     python run.py
     
 You should be able to access your website at http://localhost:5000 and admin interface at ttp://localhost:5000/admin. There is no default user you will need to Sign Up to creat one.
+
+![](http://i.imgur.com/rxFMACc.png)
+
+Demo at https://freddy-flask.herokuapp.com/
+
+Built using https://github.com/Leo-G/Flask-Scaffold/
 
 
