@@ -18,7 +18,7 @@ SECRET_KEY = "SOME SECRET"
 
 #Folder to upload files must be inside the templates folder
 
-UPLOAD_FOLDER = "static/files/"
+UPLOAD_FOLDER = "templates/static/images/"
 
 # PostgreSQL
 SQLALCHEMY_DATABASE_URI = "postgresql://{DB_USER}:{DB_PASS}@{DB_ADDR}/{DB_NAME}".format(DB_USER=pg_db_username,
