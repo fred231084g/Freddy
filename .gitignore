@@ -1,8 +1,0 @@
-config.py
-__pycache__
-
-venv-3.4
-index.py
-app/__pycache__/
-*.pyc
-
